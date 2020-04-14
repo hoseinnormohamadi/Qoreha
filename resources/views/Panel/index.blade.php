@@ -1,4 +1,4 @@
-@extends('Layuot')
+@extends('Panel.Layuot')
 @section('content')
     <section class="section">
         <ul class="breadcrumb breadcrumb-style ">
@@ -11,6 +11,7 @@
             </li>
             <li class="breadcrumb-item active">داشبورد</li>
         </ul>
+{{--
         <div class="row">
             <div class="col-lg-3 col-sm-6">
                 <div class="card">
@@ -644,6 +645,7 @@
                 </div>
             </div>
         </div>
+--}}
 
     </section>
 

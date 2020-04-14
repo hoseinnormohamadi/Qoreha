@@ -174,5 +174,9 @@ return [
         'size'                  => 'اندازه',
         'terms'                 => 'شرایط',
         'province'              => 'استان',
+        'PostName'              => 'عنوان نوشته',
+        'PostContent'           => 'محتوا نوشته',
+        'PostImage'             => 'تصویر نوشته',
+        'PostStatus'            => 'وضعیت نوشته',
     ],
 ];

@@ -13,16 +13,27 @@ class RoleCreator extends Seeder
      */
     public function run()
     {
-        //admin Roles
-        $AdminRole = Role::create(['name' => 'admin']);
-        $AdminPerms = array('Add User','Edit User','Granting access','Delete User','view users', 'Create Post','Edit Post','Read Posts','Delete Post','Create Lottery','Edit Lottery','Read Lottery','Delete Lottery','Edit Site');
-        foreach ($AdminPerms as $adminPerm) {
-            $AdminPerms = Permission::create(['name' => $adminPerm]);
+        //permissions
+        $permissions = array('Add User','Edit User','Granting access','Delete User','Update User Setting','view users', 'Create Post','Edit Post','Read Posts','Delete Post','Create Lottery','Edit Lottery','Read Lottery','Delete Lottery','Show Lottery Details','Update Lottery','Add Person To Lottery','Edit Site','Show Joined Lottery','Join Public Lottery');
+        //create permissions
+        foreach ($permissions as $permission) {
+            Permission::create(['name' => $permission]);
         }
+        //role permissions
+        $ManagerPerms = array('Create Post','Edit Post','Read Posts','Delete Post','Create Lottery','Edit Lottery','Read Lottery','Delete Lottery','Update User Setting','Add Person To Lottery');
+        $LotteryPerms = array('Show Lottery Details','Update Lottery','Add Person To Lottery','Update User Setting');
+        $UserPerms = array('Show Joined Lottery','Join Public Lottery','Update User Setting');
+
+
+        //Roles
+        $AdminRole = Role::create(['name' => 'admin']);
         $managerRole = Role::create(['name' => 'manager']);
-        $ManagerPerms = array('view users','Create Post','Edit Post','Read Posts','Delete Post','Create Lottery','Edit Lottery','Read Lottery','Delete Lottery');
+        $LotteryAdminRole = Role::create(['name' => 'lotteryadmin']);
+        $UserRole = Role::create(['name' => 'user']);
 //Assignee roles to perms
-        $AdminRole->givePermissionTo($AdminPerms);
+        $AdminRole->givePermissionTo($permissions);
         $managerRole->givePermissionTo($ManagerPerms);
+        $LotteryAdminRole->givePermissionTo($LotteryPerms);
+        $UserRole->givePermissionTo($UserPerms);
     }
 }

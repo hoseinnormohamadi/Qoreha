@@ -7,7 +7,11 @@
         </div>
         <div class="card-body">
             <form method="POST" action="{{ route('login') }}" class="needs-validation" novalidate="">
+                @csrf
 
+                    @if($errors->first())
+                        <div>{{ $errors->first() }}</div>
+                    @endif
 
                 <div class="form-group">
                     <label for="email">ایمیل</label>

@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class WebController extends Controller
 {
     public function index(){
-        return view('index');
+        return view('Panel.index');
     }
+
+
 }
