@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Blog;
 use App\Post_tag;
 use App\Tags;
+use App\Traits\AdminAuth;
 use App\Traits\Uploader;
 use Barryvdh\Reflection\DocBlock\Tag;
 use Illuminate\Database\Eloquent\Builder;
@@ -13,7 +14,9 @@ use Illuminate\Support\Facades\Auth;
 
 class BlogController extends Controller
 {
+
     use Uploader;
+    use AdminAuth;
     //return CreatePost View
     public function CreatePost(){
         return view('Panel.Blog.CreatePost',[
@@ -45,14 +48,12 @@ class BlogController extends Controller
             'PostPublisher' => \Auth::id()
         ]);
             $Post->tag()->attach($request->PostTags);
-
-        return redirect()->to('/panel/Blog/EditPost/'.$Post->id)->withErrors(['msg'=>'پست شما با موققیت ارسال شد']);
+            return RedirectController::Redirect('/panel/Blog/EditPost/'.$Post->id,'پست شما با موققیت ارسال شد');
     }
 
     //return view ShowPosts
     public function ShowPosts(){
-        $user=Auth::user();
-        if($user->hasRole('admin')){
+        if($this->IsAdmin()){
             if (request('tag')) {
                 $Posts = Blog::whereHas('tag', function (Builder $query) {
                     $query->where('name', request('tag'));
@@ -66,20 +67,21 @@ class BlogController extends Controller
             }
             $Count = Blog::where('PostStatus','Published')->count();
             $Draft = Blog::where('PostStatus','Draft')->count();
-        }elseif ($user->hasRole('manager')){
+        }
+        elseif (Auth::user()->hasRole('manager')){
             if (request('tag')) {
                 $Posts = Blog::whereHas('tag', function (Builder $query) {
                     $query->where('name', request('tag'));
-                })->where('PostPublisher' , $user->id)->paginate(25);
+                })->where('PostPublisher' , Auth::id())->paginate(25);
             }elseif (request('SearchTerm')){
-                $Posts = Blog::where('PostName','LIKE','%'.request('SearchTerm').'%')->where('PostPublisher' , $user->id)->paginate(25);
+                $Posts = Blog::where('PostName','LIKE','%'.request('SearchTerm').'%')->where('PostPublisher' , Auth::id())->paginate(25);
             }elseif (request('Mode')){
-                $Posts = Blog::where('PostStatus',request('Mode'))->where('PostPublisher' , $user->id)->paginate(25);
+                $Posts = Blog::where('PostStatus',request('Mode'))->where('PostPublisher' , Auth::id())->paginate(25);
             }else {
-                $Posts = Blog::where('PostPublisher' , $user->id)->paginate(25);
+                $Posts = Blog::where('PostPublisher' , Auth::id())->paginate(25);
             }
-            $Count = Blog::where('PostStatus','Published')->where('PostPublisher' , $user->id)->count();
-            $Draft = Blog::where('PostStatus','Draft')->where('PostPublisher' , $user->id)->count();
+            $Count = Blog::where('PostStatus','Published')->where('PostPublisher' , Auth::id())->count();
+            $Draft = Blog::where('PostStatus','Draft')->where('PostPublisher' , Auth::id())->count();
         }
 
         return view('Panel.Blog.Posts',['Posts' => $Posts , 'Published' => $Count , 'Draft' => $Draft]);
@@ -91,11 +93,11 @@ class BlogController extends Controller
     public function EditPost($PostId){
         $Post = Blog::find($PostId);
         if ($Post == null || $Post == ''){
-            return redirect()->to('/panel/AllPosts')->withErrors(['msg'=>'پست مورد نظر شما یافت نشد.مجدداً تلاش کنید']);
+            return  RedirectController::Redirect('/panel/Blog/AllPosts','پست مورد نظر شما یافت نشد.مجدداً تلاش کنید');
         }
-        if (!Auth::user()->hasRole('admin')){
-            if ($Post->PostPublisher != Auth::id()){
-                return redirect()->to('/panel/Blog/AllPosts')->withErrors(['msg'=>'شما اجازه دسترسی به این بخش را ندارید!!!']);
+        if (!$this->IsAdmin()){
+            if (!$this->CheckPublisher($Post->PostPublisher)){
+                return  RedirectController::Redirect('/panel/Blog/AllPosts','شما اجازه دسترسی به این بخش را ندارید!!!');
             }
         }
 
@@ -114,9 +116,9 @@ class BlogController extends Controller
             }*/
     public function UpdatePost($id,Request $request){
         $Post = Blog::find($id);
-        if (!Auth::user()->hasRole('admin')){
-            if ($Post->PostPublisher != Auth::id()){
-                return redirect()->to('/panel/Blog/AllPosts')->withErrors(['msg'=>'شما اجازه دسترسی به این بخش را ندارید!!!']);
+        if (!$this->IsAdmin()){
+            if (!$this->CheckPublisher($Post->PostPublisher)){
+                return  RedirectController::Redirect('/panel/Blog/AllPosts','شما اجازه دسترسی به این بخش را ندارید!!!');
             }
         }
         $request->validate([
@@ -131,7 +133,8 @@ class BlogController extends Controller
         $request->PostImage != null || $request->PostImage != "" ? $Post->PostImage = $this->UploadPic($request,'PostImage','PostImage') : '';
         $Post->save();
         $Post->tag()->sync($request->PostTags);
-        return redirect()->to('/panel/Blog/EditPost/'.$Post->id)->withErrors(['msg'=>'پست شما بروزرسانی شد']);
+
+        return  RedirectController::Redirect('/panel/Blog/EditPost/'.$Post->id,'پست شما بروزرسانی شد');
     }
 
     /*Delete Post
@@ -143,7 +146,8 @@ class BlogController extends Controller
         $Post = Blog::find($id);
 
         $Post->delete();
-        return redirect()->to('/panel/Blog/AllPosts')->withErrors(['msg'=>'پست شما با موفقیت حذف شد']);
+
+        return  RedirectController::Redirect('/panel/Blog/AllPosts','پست شما با موفقیت حذف شد');
 
     }
 
@@ -166,7 +170,8 @@ class BlogController extends Controller
         $Tag = Tags::create([
             'name' => $request->TagName
         ]);
-        return redirect()->to('/panel/Blog/EditTag/'.$Tag->id)->withErrors(['msg'=>'دسته بندی شما با موققیت افزوده شد']);
+
+        return  RedirectController::Redirect('/panel/Blog/EditTag/'.$Tag->id,'دسته بندی شما با موققیت افزوده شد');
 
     }
 
@@ -196,7 +201,7 @@ class BlogController extends Controller
         ]);
         Tags::whereId($id)->update(['name' => $request->TagName]);
 
-        return redirect()->to('/panel/Blog/EditTag/'.$id)->withErrors(['msg'=>'دسته بندی شما با موققیت بروزرسانی شد']);
+        return  RedirectController::Redirect('/panel/Blog/EditTag/'.$id,'دسته بندی شما با موققیت بروزرسانی شد');
 
     }
 
@@ -209,7 +214,7 @@ class BlogController extends Controller
     public function DeleteTag($id){
         $Tag = Tags::find($id);
         $Tag->delete();
-        return redirect()->to('/panel/Blog/AllTags')->withErrors(['msg'=>'دسته بندی با موفقیت حذف شد']);
+        return  RedirectController::Redirect('/panel/Blog/AllTags','دسته بندی با موفقیت حذف شد');
 
     }
 

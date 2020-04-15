@@ -11,6 +11,13 @@
             </li>
             <li class="breadcrumb-item active">داشبورد</li>
         </ul>
+
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                <div>error</div>
+                <div>{{$error}}</div>
+            @endforeach
+        @endif
 {{--
         <div class="row">
             <div class="col-lg-3 col-sm-6">
