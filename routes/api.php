@@ -14,6 +14,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::post('/login', 'ApiController@authenticate');
+
+Route::group(['middleware' => ['jwt.verify']], function() {
+    //store Post in queue
+    Route::post('/StorePostWithQueue', 'ApiController@StorePostWithQueue');
+    //store post directly
+    Route::post('/StorePost', 'ApiController@StorePost');
+});
+
+
+//Route::post('/login','ApiController@login');
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

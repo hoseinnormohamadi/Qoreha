@@ -208,6 +208,7 @@
                             <a href="/panel/" class="nav-link"><i class="fas fa-desktop"></i><span>داشبورد</span></a>
                         </li>
                         @endrole
+                        @if(config('Qoreha.BlogActivate') != false)
                         @role('admin|manager')
                         <li class="dropdown {{(request()->segment(2) == 'Blog') ? 'active': ''}}">
                             <a href="#" class="menu-toggle nav-link has-dropdown"><i class="fas fa-blog"></i><span>وبلاگ</span></a>
@@ -219,14 +220,18 @@
                             </ul>
                         </li>
                         @endrole
+                        @endif
+
+
+
                         @role('admin|manager|lotteryadmin')
-                        <li class="dropdown {{(request()->segment(2) == 'lottery') ? 'active': ''}}">
+                        <li class="dropdown {{(request()->segment(2) == 'Lottery') ? 'active': ''}}">
                             <a href="#" class="menu-toggle nav-link has-dropdown"><i class="fas fa-gifts"></i><span>قرعه کشی ها</span></a>
                             <ul class="dropdown-menu">
-                                <li><a class="nav-link" href="/panel/lottery/show">مدیریت قرعه کشی ها</a></li>
+                                <li><a class="nav-link" href="/panel/Lottery/AllLottery">مدیریت قرعه کشی ها</a></li>
                                 @role('admin|manager')
-                                <li><a class="nav-link" href="/panel/lottery/add">افزودن قرعه کشی</a></li>
-                                <li><a class="nav-link" href="/panel/lottery/frominsta">اطلاعات جمع شده از اینستاگرام</a></li>
+                                <li><a class="nav-link" href="/panel/Lottery/Create">افزودن قرعه کشی</a></li>
+                                <li><a class="nav-link" href="/panel/Lottery/UncheckedLottery">قرعه کشی های تایید نشده</a></li>
                                 @endrole
                             </ul>
                         </li>

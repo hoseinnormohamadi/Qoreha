@@ -1,38 +1,60 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 Auth::routes();
 
-Route::group(['middleware' => 'auth','prefix' => 'panel'], function () {
-    Route::get('/','WebController@index');
+Route::group(['middleware' => 'auth', 'prefix' => 'panel'], function () {
+    Route::get('/', 'WebController@index');
+    Route::group(['prefix' => 'User'], function () {
+        //User Operations goes here
+    });
 
     //Blog Routes
-    //Show Posts
-    Route::get('/Blog/AllPosts','BlogController@ShowPosts');
-    //return createpost view
-    Route::get('/Blog/CreatePost','BlogController@CreatePost');
-    //store post
-    Route::post('/Blog/CreatePost','BlogController@StorePost');
-    //return edit post view
-    Route::get('/Blog/EditPost/{PostID}','BlogController@EditPost');
-    //Update post
-    Route::put('/Blog/EditPost/{PostID}','BlogController@UpdatePost');
-    //Delete Post
-    Route::get('/Blog/DeletePost/{PostID}','BlogController@DeletePost');
+    Route::group(['prefix' => 'Blog'], function () {
+        //Show Posts
+        Route::get('/AllPosts', 'BlogController@ShowPosts');
+        //return createpost view
+        Route::get('/CreatePost', 'BlogController@CreatePost');
+        //store post
+        Route::post('/CreatePost', 'BlogController@StorePost');
+        //return edit post view
+        Route::get('/EditPost/{PostID}', 'BlogController@EditPost');
+        //Update post
+        Route::put('/EditPost/{PostID}', 'BlogController@UpdatePost');
+        //Delete Post
+        Route::get('/DeletePost/{PostID}', 'BlogController@DeletePost');
+
+        //Show All Tags
+        Route::get('/AllTags', 'BlogController@ShowTags');
+        //return createTag view
+        Route::get('/CreateTag', 'BlogController@CreateTag');
+        //Store new Tag
+        Route::post('/CreateTag', 'BlogController@StoreTag');
+        //Return edittag view
+        Route::get('/EditTag/{TagID}', 'BlogController@EditTag');
+        //Update Tag
+        Route::put('/EditTag/{TagID}', 'BlogController@UpdateTag');
+        //Delete Tag
+        Route::get('/DeleteTag/{TagID}', 'BlogController@DeleteTag');
+    });
+
+    //Lottery Routes
+    Route::group(['prefix' => 'Lottery'], function () {
+        //Show All Lottery
+        Route::get('/AllLottery', 'LotteryController@AllLottery');
+        //Create Lottery
+        Route::get('/Create', 'LotteryController@Create');
+        //Show All Unchecked Lottery
+        Route::get('/UncheckedLottery', 'LotteryController@UnChecked');
+        //Show One Unchecked Lottery
+        Route::get('/ImportLottery/{UnckeckedLotteryID}', 'LotteryController@GetLottery');
 
 
-    Route::get('/Blog/AllTags','BlogController@ShowTags');
-    Route::get('/Blog/CreateTag','BlogController@CreateTag');
-    Route::post('/Blog/CreateTag','BlogController@StoreTag');
-    Route::get('/Blog/EditTag/{TagID}','BlogController@EditTag');
-    Route::put('/Blog/EditTag/{TagID}','BlogController@UpdateTag');
-    Route::get('/Blog/DeleteTag/{TagID}','BlogController@DeleteTag');
-
-
+    });
 
 });
-Route::get('/','HomeController@index');
-
+Route::get('/', 'HomeController@index');
 
 
 Route::get('/home', 'HomeController@index')->name('home');

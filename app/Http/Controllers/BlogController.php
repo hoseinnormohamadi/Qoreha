@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Blog;
 use App\Post_tag;
 use App\Tags;
-use App\Traits\AdminAuth;
+use App\Traits\CustomAuth;
 use App\Traits\Uploader;
 use Barryvdh\Reflection\DocBlock\Tag;
 use Illuminate\Database\Eloquent\Builder;
@@ -14,9 +14,14 @@ use Illuminate\Support\Facades\Auth;
 
 class BlogController extends Controller
 {
-
+    //Control Blog is activated
+    public function __construct(){
+        if (config('Qoreha.BlogActivate') != true){
+            return RedirectController::Redirect('/panel/','برای فعال سازی وبلاگ از تنظیمات سایت اقدام کنید')->send();
+        }
+    }
     use Uploader;
-    use AdminAuth;
+    use CustomAuth;
     //return CreatePost View
     public function CreatePost(){
         return view('Panel.Blog.CreatePost',[
@@ -205,7 +210,7 @@ class BlogController extends Controller
 
     }
 
-    /*Delete Post
+    /*Delete Tag
   Param{
         PostID
         }
