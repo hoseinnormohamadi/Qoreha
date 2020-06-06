@@ -17,6 +17,17 @@ class ApiController extends Controller
 {
     use Uploader;
 
+
+    public function ApiHealth()
+    {
+        return response()->json([
+            'Data' => [
+                'Message' => 'OK',
+                'Status' => 'Done'
+            ]
+        ],200);
+    }
+
     public function authenticate(Request $request)
     {
         $credentials = $request->only('email', 'password');
@@ -28,59 +39,75 @@ class ApiController extends Controller
         } catch (JWTException $e) {
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
+        if (\Auth::user()->Rule != 'Robot'){
+            return response()->json(['error' => 'Access_Denied'], 500);
 
+        }
         return response()->json(compact('token'));
     }
 
 
     public function StorePostWithQueue(Request $request)
     {
-        $request->validate([
-            'Content' => 'required|string',
-            'Image' => 'required|string',
-        ]);
-        $Post = UncheckedLottery::where('LotteryImageLink', $request->Image)->get()[0];
-        if ($Post != null && !empty($Post)) {
-            return response()->json('Post Exist', 200);
+        if(\Auth::user()->Rule == 'Robot'){
+            $request->validate([
+                'Content' => 'required|string',
+                'Image' => 'required|string',
+            ]);
+            $Post = UncheckedLottery::where('LotteryImageLink', $request->Image)->get()[0];
+            if ($Post != null && !empty($Post)) {
+                return response()->json('Post Exist', 200);
+            }
+            $FileName = $this->ValidateImage($request->Image);
+            if ($FileName === null) {
+                return response()->json('Image Not Valid', 200);
+            }
+            $Image = $this->GetImage($request->Image, $FileName, 'Downloads/');
+            if ($Image === null) {
+                return response()->json('Problem to save Image', 200);
+            }
+            StorePostFromApi::dispatch($Image, $request->Image, $request->Content);
+            return response()->json('Created', 200);
+        }else{
+            return response()->json('Done', 200);
         }
-        $FileName = $this->ValidateImage($request->Image);
-        if ($FileName === null) {
-            return response()->json('Image Not Valid', 200);
-        }
-        $Image = $this->GetImage($request->Image, $FileName, 'Downloads/');
-        if ($Image === null) {
-            return response()->json('Problem to save Image', 200);
-        }
-        StorePostFromApi::dispatch($Image, $request->Image, $request->Content);
-        return response()->json('Created', 200);
+
     }
 
     public function StorePost(Request $request)
     {
-        $request->validate([
-            'Content' => 'required|string',
-            'Image' => 'required|string',
-        ]);
 
-        $Post = UncheckedLottery::where('LotteryImageLink', $request->Image)->get()[0];
-        if ($Post != null && !empty($Post)) {
-            return response()->json('Lottery Exist', 200);
+        if(\Auth::user()->Rule == 'Robot'){
+            $request->validate([
+                'Content' => 'required|string',
+                'Image' => 'required|string',
+            ]);
+
+            $Post = UncheckedLottery::where('LotteryImageLink', $request->Image)->get();
+
+            $Lottery = $this->CheckImage($request->Image);
+            if ($Lottery == true) {
+                return response()->json('Lottery Exist', 200);
+            }
+            $FileName = $this->ValidateImage($request->Image);
+            if ($FileName === null) {
+                return response()->json('Image Not Valid', 200);
+            }
+            $Image = $this->GetImage($request->Image, $FileName, 'Downloads/');
+            if ($Image === null) {
+                return response()->json('Problem to save Image', 200);
+            }
+            UncheckedLottery::create([
+                'LotteryContent' => $request->Content,
+                'LotteryImage' => 'ok3s',
+                'LotteryImageLink' => 'oks2',
+                'Worker' => \Auth::user()->id
+            ]);
+            return response()->json('Created', 200);
+        }else{
+            return response()->json('Done', 200);
         }
-        $FileName = $this->ValidateImage($request->Image);
-        if ($FileName === null) {
-            return response()->json('Image Not Valid', 200);
-        }
-        $Image = $this->GetImage($request->Image, $FileName, 'Downloads/');
-        if ($Image === null) {
-            return response()->json('Problem to save Image', 200);
-        }
-        UncheckedLottery::create([
-            'LotteryContent' => $request->Content,
-            'LotteryImage' => $Image,
-            'LotteryImageLink' => $request->Image,
-            'Worker' => 1
-        ]);
-        return response()->json('Created', 200);
+
     }
 
 
@@ -138,5 +165,16 @@ class ApiController extends Controller
             return $FinalName[0] . '.' . $FinalName[1];
         }
         return null;
+    }
+
+    private function CheckImage($Link)
+    {
+        $Lottery = UncheckedLottery::where('LotteryImageLink', $Link)->get();
+        if (!$Lottery) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 }

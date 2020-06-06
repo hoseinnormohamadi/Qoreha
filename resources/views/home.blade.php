@@ -14,6 +14,8 @@
                         </div>
                     @endif
 
+                        <button class="btn btn-danger" onclick="window.location.href = '/panel/'">ورود به پنل</button>
+
                     You are logged in!
                 </div>
             </div>

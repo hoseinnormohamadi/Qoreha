@@ -7,36 +7,43 @@ trait CustomAuth
 {
     //Check Authed user is admin or not
     public function IsAdmin(){
-       if (\Auth::user()->hasRole('admin')){
-           return true;
-       }else{
-           return  false;
-       }
+        if (\Auth::user()->Rule == 'Admin'){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     //Check Authed user is manager or not
     public function IsManager(){
-        if (\Auth::user()->hasRole('manager')){
+        if (\Auth::user()->Rule == 'Manager'){
             return true;
         }else{
-            return  false;
+            return false;
         }
     }
 
     //Check Authed user is lotteryadmin or not
-    public function IsLotteryAdmin(){
-        if (\Auth::user()->hasRole('lotteryadmin')){
+    public function IsLotteryOwner(){
+        if (\Auth::user()->Rule == 'LotteryOwner'){
             return true;
         }else{
-            return  false;
+            return false;
         }
     }
     //Check Authed user is user or not
-    public function IsUser(){
-        if (\Auth::user()->hasRole('user')){
+    public function IsSupervisor(){
+        if (\Auth::user()->Rule == 'Supervisor'){
             return true;
         }else{
-            return  false;
+            return false;
+        }
+    }
+    public function IsRobot(){
+        if (\Auth::user()->Rule == 'Robot'){
+            return true;
+        }else{
+            return false;
         }
     }
     /*Check Authed user is publisher or not

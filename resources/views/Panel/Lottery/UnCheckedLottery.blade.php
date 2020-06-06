@@ -26,39 +26,46 @@
                 <div class="col-12">
                     <div class="card mb-0">
                         <div class="card-body">
-                            @role('admin')
-                            <ul class="nav nav-pills">
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="?Mode=">همه <span
-                                            class="badge badge-primary">{{2}}</span></a>
-                                </li>
-                                <li class="nav-item ">
-                                    <a class="nav-link text-info" href="?Mode=Published">منتشر شده<span
-                                            class="badge badge-info">{{1}}</span></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-danger" href="?Mode=Draft">پیش نویس <span
-                                            class="badge badge-danger">{{1}}</span></a>
-                                </li>
-
-                            </ul>
-                            @endrole
-
-
-                            @role('manager')
-                            <ul class="nav nav-pills">
-                                <li class="nav-ite">
-                                    <a class="nav-link" href="?">قرعه های شما <span
-                                            class="badge badge-primary">{{$Lotterys->count()}}</span></a>
-                                </li>
-                                @if($Lotterys->count() == 0 )
+                            @if(Auth::user()->Rule == 'Admin')
+                                <ul class="nav nav-pills">
                                     <li class="nav-item">
-                                        <a class="nav-link active" href="?GetLottery=true">دریافت قرعه کشی</a>
+                                        <a class="nav-link active" href="?Mode=">همه <span
+                                                class="badge badge-primary">{{$All}}</span></a>
                                     </li>
-                                @endif
+                                    <li class="nav-item ">
+                                        <a class="nav-link text-info" href="?Mode=Published">منتشر شده<span
+                                                class="badge badge-info">{{$Published}}</span></a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-danger" href="?Mode=Draft">پیش نویس <span
+                                                class="badge badge-danger">{{$Draft}}</span></a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-danger" href="?Mode=Waiting">در انتظار <span
+                                                class="badge badge-danger">{{$Waiting}}</span></a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-danger" href="?Mode=Archive">آرشیو <span
+                                                class="badge badge-danger">{{$Archive}}</span></a>
+                                    </li>
 
-                            </ul>
-                            @endrole
+                                </ul>
+                            @endif
+
+                            @if(Auth::user()->Rule == 'Manager')
+                                <ul class="nav nav-pills">
+                                    <li class="nav-ite">
+                                        <a class="nav-link" href="?">قرعه های شما <span
+                                                class="badge badge-primary">{{$All}}</span></a>
+                                    </li>
+                                    @if($All == 0 )
+                                        <li class="nav-item">
+                                            <a class="nav-link active" href="?GetLottery=true">دریافت قرعه کشی</a>
+                                        </li>
+                                    @endif
+
+                                </ul>
+                                @endif
                         </div>
                     </div>
                 </div>
@@ -97,12 +104,12 @@
                                                 <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
                                             </div>
                                         </th>
-                                        @role('admin')
+                                        @if(Auth::user()->Rule == 'Admin')
                                         <th>مسئول</th>
-                                        @endrole
+                                        @endif
                                         <th>محتوا</th>
                                         <th>ایجاد شده در</th>
-                                        <th>ارسال کننده</th>
+                                        {{--<th>ارسال کننده</th>--}}
                                         <th>وضعیت</th>
                                     </tr>
                                     @foreach($Lotterys as $Lottery)
@@ -114,15 +121,16 @@
                                                     <label for="checkbox-{{$Lottery->id}}" class="custom-control-label">&nbsp;</label>
                                                 </div>
                                             </td>
-                                            @role('admin')
+                                            @if(Auth::user()->Rule == 'Admin')
+
                                             <td>
 
-                                                <img alt="تصویر" src="\assets\img\users\user-1.png"
+                                                <img alt="تصویر" src="{{$Lottery->User->ProfileImage}}"
                                                      class="rounded-circle" width="35" data-toggle="title" title="">
-                                                <span class="d-inline-block ml-1">{{$Lotterys->Worker}}</span>
+                                                <span class="d-inline-block ml-1">{{$Lottery->User->Username}}</span>
 
                                             </td>
-                                            @endrole
+                                            @endif
                                             <td>{{Str::limit($Lottery->LotteryContent,100) }}
                                                 <div class="table-links">
 
@@ -136,24 +144,24 @@
                                                 {{\Verta::instance($Lottery->created_at)->format('Y-m-d')}}
                                             </td>
 
-
+{{--
                                             <td>
                                                 @if($Lottery->Sender == 'Bot')
                                                     <div class="badge badge-primary">ربات</div>
                                                 @elseif($Lottery->Sender == 'User')
                                                     <div class="badge badge-primary">Must Show User Name</div>
                                                 @endif
-                                            </td>
+                                            </td>--}}
 
-                                                <td>
-                                                    @if($Lottery->LotteryStatus == 'Published')
+                                            <td>
+                                                @if($Lottery->LotteryStatus == 'Published')
                                                     <div class="badge badge-primary">منتشر شده</div>
-                                                    @elseif($Lottery->LotteryStatus == 'Draft')
-                                                        <div class="badge badge-danger">حذف شده</div>
-                                                    @elseif($Lottery->LotteryStatus == 'Waiting')
-                                                        <div class="badge badge-info">در انتظار بررسی</div>
-                                                    @endif
-                                                </td>
+                                                @elseif($Lottery->LotteryStatus == 'Draft')
+                                                    <div class="badge badge-danger">حذف شده</div>
+                                                @elseif($Lottery->LotteryStatus == 'Waiting')
+                                                    <div class="badge badge-info">در انتظار بررسی</div>
+                                                @endif
+                                            </td>
 
                                         </tr>
                                     @endforeach
@@ -162,7 +170,7 @@
                             </div>
                             <div class="float-right">
                                 <nav>
-                                    {{--                                    {!! $Lotterys->links() !!}--}}
+                                    {!! $Lotterys->links() !!}
                                 </nav>
                             </div>
                         </div>

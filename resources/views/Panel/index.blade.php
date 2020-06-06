@@ -18,7 +18,6 @@
                 <div>{{$error}}</div>
             @endforeach
         @endif
-{{--
         <div class="row">
             <div class="col-lg-3 col-sm-6">
                 <div class="card">
@@ -652,7 +651,6 @@
                 </div>
             </div>
         </div>
---}}
 
     </section>
 

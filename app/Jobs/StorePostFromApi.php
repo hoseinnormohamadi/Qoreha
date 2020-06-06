@@ -28,7 +28,7 @@ class StorePostFromApi implements ShouldQueue
             'LotteryContent' => $this->Data['Content'],
             'LotteryImage' => $this->Data['Image'],
             'LotteryImageLink' => $this->Data['ImageLink'],
-            'Worker' => 1
+            'Worker' => \Auth::user()->id
         ]);
     }
 }

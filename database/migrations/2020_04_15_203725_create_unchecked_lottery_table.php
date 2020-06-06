@@ -13,7 +13,7 @@ class CreateUncheckedLotteryTable extends Migration
      */
     public function up()
     {
-        Schema::create('unchecked_lottery', function (Blueprint $table) {
+        Schema::create('uncheckedLottery', function (Blueprint $table) {
             $table->id();
             $table->text('LotteryContent');
             $table->text('LotteryImage');
@@ -33,6 +33,6 @@ class CreateUncheckedLotteryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('unchecked_posts');
+        Schema::dropIfExists('uncheckedLottery');
     }
 }

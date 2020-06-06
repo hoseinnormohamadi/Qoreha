@@ -18,7 +18,7 @@
                 <a href="/panel/">
                     <i class="fas fa-home"></i></a>
             </li>
-            <li class="breadcrumb-item">وبلاگ</li>
+            <li class="breadcrumb-item">قرعه کشی</li>
             <li class="breadcrumb-item">بررسی قرعه کشی</li>
         </ul>
         <div class="section-body">
@@ -36,7 +36,7 @@
                             </h4>
                         </div>
                         <div class="card-body">
-                            <form method="POST" action="/panel/Lottery/ImportLottery" enctype="multipart/form-data">
+                            <form method="POST" action="/panel/Lottery/ImportLottery/{{$Lottery->id}}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group row mb-4">
                                     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3  @error('LotteryTitle') text-danger @enderror">عنوان</label>
@@ -67,33 +67,76 @@
                                     </div>
                                 </div>
 
-                                {{--<div class="form-group row mb-4">
+                                <div class="form-group row mb-4">
                                     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">دسته بندی
                                         ها</label>
                                     <div class="col-sm-12 col-md-7">
                                         <select class="form-control selectric" name="PostTags">
                                             <option>انتخاب دسته بندی</option>
-                                            @foreach($tags as $tag)
-                                            <option name="PostTags" value="{{$tag->id}}">{{$tag->name}}</option>
+                                            @foreach($Tags as $tag)
+                                            <option name="LotteryTags" value="{{$tag->id}}">{{$tag->name}}</option>
                                                 @endforeach
                                         </select>
                                     </div>
-                                </div>--}}
+                                </div>
+
+
+
+                                <div class="form-group row mb-4">
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3  @error('LotteryFirstPrize') text-danger @enderror">جایزه اصلی</label>
+                                    <div class="col-sm-12 col-md-7 ">
+                                        <input type="text" class="form-control @error('LotteryFirstPrize') border border-danger @enderror" name="LotteryFirstPrize">
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-group row mb-4">
+
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3  @error('LotteryPrizes') text-danger @enderror">دیگر جوایز</label>
+                                    <div class="col-sm-12 col-md-7 ">
+                                        <small>جایزه ها را با - از هم جدا کنید</small>
+
+                                        <input type="text" class="form-control @error('LotteryPrizes') border border-danger @enderror" name="LotteryPrizes">
+                                    </div>
+
+                                </div>
+
+
+                                <div class="form-group row mb-4">
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">نوع قرعه کشی</label>
+                                    <div class="col-sm-12 col-md-7">
+                                        <select class="form-control selectric" name="LotteryType">
+                                            <option name="LotteryType" value="Digital">دیجیتال</option>
+                                            <option name="LotteryType" value="Traditional">سنتی</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-group row mb-4">
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">تاریخ قرعه کشی</label>
+                                    <div class="col-sm-12 col-md-7">
+                                        <input class="form-control" type="date" name="LotteryDate">
+                                    </div>
+                                </div>
+
 
                                 <div class="form-group row mb-4">
                                     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">وضعیت</label>
                                     <div class="col-sm-12 col-md-7">
-                                        <select class="form-control selectric" name="PostStatus">
-                                            <option name="PostStatus" value="Published">انتشار</option>
-                                            <option name="PostStatus" value="Draft">پیش نویس</option>
-                                            <option name="PostStatus" value="Archive">بایگانی</option>
+                                        <select class="form-control selectric" name="LotteryStatus">
+                                            <option name="LotteryStatus" value="Published">انتشار</option>
+                                            <option name="LotteryStatus" value="Draft">پیش نویس</option>
+                                            <option name="LotteryStatus" value="Archive">بایگانی</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-4">
                                     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
                                     <div class="col-sm-12 col-md-7">
-                                        <button class="btn btn-primary">ایجاد پست</button>
+                                        <button class="btn btn-primary">ایجاد قرعه کشی</button>
                                     </div>
                                 </div>
                             </form>

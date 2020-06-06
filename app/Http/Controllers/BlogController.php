@@ -39,6 +39,7 @@ class BlogController extends Controller
     PostTag
      }*/
     public function StorePost(Request $request){
+
         $request->validate([
             'PostName' => 'required|string|max:150',
             'PostContent' => 'required|string',
@@ -73,7 +74,7 @@ class BlogController extends Controller
             $Count = Blog::where('PostStatus','Published')->count();
             $Draft = Blog::where('PostStatus','Draft')->count();
         }
-        elseif (Auth::user()->hasRole('manager')){
+        elseif ($this->IsManager()){
             if (request('tag')) {
                 $Posts = Blog::whereHas('tag', function (Builder $query) {
                     $query->where('name', request('tag'));

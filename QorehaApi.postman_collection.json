@@ -1,0 +1,163 @@
+{
+	"info": {
+		"_postman_id": "dcef6026-308b-4bec-bd70-7db20a201bff",
+		"name": "QorehaApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "StorePost",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTU5MDYwNDY5NiwiZXhwIjoxNTkwNjA4Mjk2LCJuYmYiOjE1OTA2MDQ2OTYsImp0aSI6IkV2cVdQWlFPT0lhZGtndHciLCJzdWIiOjIsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEifQ.3v5ZA1lxylRln66rD3fhwQ2beMhlRXedSpN8L_Ed-j0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "Content",
+							"value": "مسابقه ماهانه <📣تگش كن📣> موبايل عطا با جوايز ارزنده📱💵💳 .\n🗓مهلت شركت تا ساعت ١٠:٣٠ شنبه ٣٠ فروردين ماهه\n.\n⁉️فقط كافيه........ 1️⃣این پستو لایک کنید،...... 2️⃣پیج ما رو 🔅follow🔅 کرده باشید و ......... 3️⃣در هر كامنت‌ زیر همین پست حداقل ۵ نفر از دوستاتونو ⬅️ تگ/منشن ➡️ کنید. ( محدودیت برای تگ/منشن کردن ندارید پس مطمئن باشید که با تگ/منشن کردن افراد بیشتر، شانستون بالا میره) .\n💠بین کامنت‌ها به قید قرعه‌ جوایز ارزنده‌ایی تقدیمتون میکنیم .💠\n. 🎁جوایز:\n1️⃣ گوشی Huawei Y5 lite\n2️⃣ کارت هدیه ۲٫۰۰۰٫۰۰۰ ریالی\n3️⃣ کارت هدیه ۱٫۰۰۰٫۰۰۰ ریالی\n4️⃣ فلش / مموری ۳۲ گیگ\n5️⃣ فلش / مموری ۱۶ گیگ\n.\n.\n⚠️ اگر اسم شما در قرعه‌کشی باشد ولی پیج ما را follow نکرده باشید، اسم شما حذف و قرعه‌کشی دوباره انجام میگیرد و شخص جدید جایگزین شما خواهد شد.\n.\n.\n\n#موبایل_عطا #موبایل #قرعهکشی #قرعه_کشی #گوشی #گوشی_سامسونگ #تگش_کن #مسابقه #جایزه #جایزه_نقدی #جایزه_ویژه #برنده_باش #a51 #کارت_هدیه #هدایا #جوایز #قرعه_کشی_ماهانه #هدایای_تبلیغاتی #گوشی_هوشمند #اصفهان #برنده_شو #برنده #مجانی #تهران\n#تگ #هدیه #تگ_کنید_دوستاتونو #اپل_استور #اپل\n#tell_ir",
+							"type": "text"
+						},
+						{
+							"key": "Image",
+							"value": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-15/e35/s1080x1080/91424957_216391866341516_6262906390410735675_n.jpg?_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=108&_nc_ohc=YM6YknRTeeMAX-YEgAe&oh=070e89686f52549c95971d353960c29a&oe=5EF834AE",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/StorePost",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"StorePost"
+					]
+				},
+				"description": "Store Post With ROBOT"
+			},
+			"response": []
+		},
+		{
+			"name": "Check API Health",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTU5MDYwNDY5NiwiZXhwIjoxNTkwNjA4Mjk2LCJuYmYiOjE1OTA2MDQ2OTYsImp0aSI6IkV2cVdQWlFPT0lhZGtndHciLCJzdWIiOjIsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEifQ.3v5ZA1lxylRln66rD3fhwQ2beMhlRXedSpN8L_Ed-j0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"PostName\": \"Test\",\n    \"PostContent\": \"Test\",\n    \"PostStatus\": \"Draft\",\n    \"PostTags\": \"1\",\n    \"PostImage\": {}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/ApiHealth",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"ApiHealth"
+					]
+				},
+				"description": "Check API Health"
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "Robot@Qoreha.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"login"
+					]
+				},
+				"description": "Login With ROBOT to Work"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

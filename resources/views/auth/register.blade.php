@@ -8,15 +8,43 @@
             <div class="card-body">
                 <form method="POST" action="{{ route('register') }}">
                     @csrf
-                    <div class="form-group">
 
-                        <label for="name">نام کاربری</label>
-                        <input id="name" type="text" class="form-control @error('name') border border-danger @enderror" name="name"
-                               autofocus="" value="{{ old('name') }}">
-                        @error('name')
-                        <strong>{{ $message }}</strong>
-                        @enderror
+
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label for="FirstName" class="d-block">نام</label>
+                            <input id="FirstName" type="text" class="form-control  @error('FirstName') border border-danger @enderror"
+                                   name="FirstName" value="{{old('FirstName')}}">
+                        </div>
+                        <div class="form-group col-6">
+                            <label for="LastName" class="d-block">نام خانوادگی</label>
+                            <input id="LastName" type="text" class="form-control @error('LastName') border border-danger @enderror"
+                                   name="LastName" value="{{old('LastName')}}">
+                        </div>
                     </div>
+
+
+                        <div class="row">
+                            <div class="form-group col-6">
+                                <label for="name">نام کاربری</label>
+                                <input id="name" type="text" class="d-block form-control @error('name') border border-danger @enderror"
+                                       name="Username"
+                                       autofocus="" value="{{ old('name') }}">
+                                @error('name')
+                                <strong>{{ $message }}</strong>
+                                @enderror
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="PhoneNumber" class="d-block">شماره</label>
+                                <input id="PhoneNumber" type="text" class="form-control @error('PhoneNumber') border border-danger @enderror"
+                                       name="PhoneNumber" value="{{ old('PhoneNumber') }}">
+                                @error('PhoneNumber')
+                                <strong>{{ $message }}</strong>
+                                @enderror
+                            </div>
+                        </div>
+
+
                     <div class="form-group">
                         <label for="email">ایمیل</label>
                         <input id="email" type="email"

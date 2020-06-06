@@ -176,7 +176,7 @@ return [
 
 
 
-        Spatie\Permission\PermissionServiceProvider::class,
+        Kavenegar\Laravel\ServiceProvider::class,
         Hekmatinasser\Verta\VertaServiceProvider::class,
     ],
 
@@ -233,7 +233,7 @@ return [
 
 
 
-
+        'Kavenegar' => Kavenegar\Laravel\Facade::class,
         'Verta' => Hekmatinasser\Verta\Verta::class,
     ],
 

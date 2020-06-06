@@ -17,7 +17,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/login', 'ApiController@authenticate');
 
-Route::group(['middleware' => ['jwt.verify']], function() {
+Route::group(['middleware' => ['jwt.verify'],'prefix' => '/v1'], function() {
+    //Test Api Health
+    Route::get('/ApiHealth','ApiController@ApiHealth');
     //store Post in queue
     Route::post('/StorePostWithQueue', 'ApiController@StorePostWithQueue');
     //store post directly

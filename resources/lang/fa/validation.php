@@ -178,5 +178,15 @@ return [
         'PostContent'           => 'محتوا نوشته',
         'PostImage'             => 'تصویر نوشته',
         'PostStatus'            => 'وضعیت نوشته',
+        'PhoneNumber'          => 'شماره تلفن',
+        'FirstName'          => 'نام',
+        'LastName'          => 'نام خانوادگی',
+        'Rule'          => 'سطح دسترسی',
+        'ProfileImage'          => 'عکس پروفایل',
+        'CodeMeli'          => 'کدملی',
+        'Address'          => 'آدرس',
+        'About'          => 'درباره',
+        'identityCartPic'          => 'عکس کارت شناسایی',
+
     ],
 ];

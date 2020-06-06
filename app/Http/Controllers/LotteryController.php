@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Lottery;
 use App\LotteryCat;
 use App\Traits\CustomAuth;
+use App\Traits\Uploader;
 use App\UncheckedLottery;
 use App\UncheckedPost;
 use App\User;
@@ -11,48 +13,163 @@ use Illuminate\Http\Request;
 
 class LotteryController extends Controller
 {
+    use Uploader;
     use CustomAuth;
-    public function AllLottery(){
+
+    public function AllLottery()
+    {
+
+
+        if ($this->IsAdmin()) {
+            if (\request('SearchTerm')) {
+                $Lotterys = Lottery::where('LotteryContent', \request('SearchTerm'))->paginate(25);
+            } elseif (request('Mode')) {
+                $Lotterys = Lottery::where('LotteryStatus', request('Mode'))->paginate(25);
+            } else {
+                $Lotterys = Lottery::paginate(25);
+            }
+            $All = Lottery::all()->count();
+
+        }
+        return view('Panel.Lottery.Lottery')
+            ->with('Lotterys', $Lotterys)
+            ->with('All', $All);
+
 
     }
-    protected function Create(){
+
+    public function Create()
+    {
         $Cats = LotteryCat::all();
-        return view('Panel.Lottery.CreateLottery',['Cats' => $Cats]);
+        return view('Panel.Lottery.CreateLottery', ['Cats' => $Cats]);
     }
 
-    public function GetLottery($id,Request $request){
+    public function Edit($id)
+    {
+        $Lottery = Lottery::find($id);
+        if ($Lottery == null || empty($Lottery)) {
+            return RedirectController::Redirect('/panel/Lottery/AllLottery', 'قرعه کشی مورد نظر پیدا نشد');
+        }
+        return view('Panel.Lottery.Edit')->with('Lottery', $Lottery);
+    }
+
+    public function GetLottery($id, Request $request)
+    {
         $Lottery = UncheckedLottery::find($id);
-        return view('Panel.Lottery.ImportLottery',['Lottery' => $Lottery]);
+        $Tags = LotteryCat::all();
+        return view('Panel.Lottery.ImportLottery', ['Lottery' => $Lottery, 'Tags' => $Tags]);
     }
 
-    public function UnChecked(){
-        if ($this->IsAdmin()){
-            if (\request('SearchTerm')){
-                $Lotterys = UncheckedLottery::where('LotteryContent',\request('SearchTerm'));
-            }else{
-                $Lotterys = UncheckedLottery::all()->paginate(25);
-            }
 
+    public function Import($id, Request $request)
+    {
+        $request->validate([
+            'LotteryTitle' => 'required|string|max:50',
+            'LotteryContent' => 'required|string',
+            'LotteryFirstPrize' => 'string',
+            'LotteryPrizes' => 'string',
+            'LotteryType' => 'required|string',
+            'LotteryDate' => 'required|date',
+        ]);
+        $UncheckedLottery = UncheckedLottery::find($id);
+        if ($request->LotteryStatus == 'Published') {
+            $Lottery = Lottery::create([
+                'LotteryTitle' => $request->LotteryTitle,
+                'LotteryContent' => $request->LotteryContent,
+                'LotteryFirstPrize' => $request->LotteryFirstPrize,
+                'LotteryPrizes' => json_encode($request->LotteryPrizes),
+                'LotteryType' => $request->LotteryType,
+                'LotteryDate' => $request->LotteryDate,
+                'LotteryImage' => $request->hasFile('LotteryImage') ? $this->UploadPic($request, 'LotteryImage', 'Lottery', 'Lottery') : $UncheckedLottery->LotteryImage,
+                'LotteryWorker' => \Auth::id(),
+                'LotteryMode' => 'public',
+            ]);
+            $Lottery->tag()->attach($request->LotteryTags);
+
+            return RedirectController::Redirect('/panel/Lottery/UncheckedLottery', 'قرعه کشی با موفقیت ایجاد شد');
+        } else {
+            $UncheckedLottery->LotteryStatus = $request->LotteryStatus;
+            return RedirectController::Redirect('/panel/Lottery/UncheckedLottery','قرعه کشی با موفقیت ویرایش شد');
         }
-        elseif ($this->IsManager()){
-            if (\request('GetLottery') == true){
-                if (UncheckedLottery::where('Worker',\Auth::id())->count() == 0){
-                    UncheckedLottery::where('Worker' , 1)->limit(10)->update(['Worker' => \Auth::id()]);
+    }
+
+    public function UnChecked()
+    {
+        if ($this->IsAdmin()) {
+            if (\request('SearchTerm')) {
+                $Lotterys = UncheckedLottery::where('LotteryContent', \request('SearchTerm'));
+            } elseif (request('Mode')) {
+                $Lotterys = UncheckedLottery::where('LotteryStatus', request('Mode'))->paginate(25);
+            } else {
+                $Lotterys = UncheckedLottery::paginate(25);
+            }
+            $All = UncheckedLottery::all()->count();
+            $Published = UncheckedLottery::where('LotteryStatus', 'Published')->count();
+            $Draft = UncheckedLottery::where('LotteryStatus', 'Draft')->count();
+            $Waiting = UncheckedLottery::where('LotteryStatus', 'Waiting')->count();
+            $Archive = UncheckedLottery::where('LotteryStatus', 'Archive')->count();
+
+        } elseif ($this->IsManager()) {
+            if (\request('GetLottery') == true) {
+                if (UncheckedLottery::where('Worker', \Auth::id())->count() == 0) {
+                    UncheckedLottery::where('Worker', null)->limit(10)->update(['Worker' => \Auth::id()]);
                 }
-                $Lotterys = UncheckedLottery::where('Worker',\Auth::id())->get();
+                $Lotterys = UncheckedLottery::where('Worker', \Auth::id())->paginate(25);
+            } elseif (\request('SearchTerm')) {
+                $Lotterys = UncheckedLottery::where('Worker', \Auth::id())->where('LotteryContent', 'LIKE', '%' . request('SearchTerm') . '%')->paginate(25);
+                $All = $Lotterys->count();
+            } else {
+                $Lotterys = UncheckedLottery::where('Worker', \Auth::id())->paginate(25);
             }
-            elseif (\request('SearchTerm')){
-                $Lotterys = UncheckedLottery::where('Worker' , \Auth::id())->where('LotteryContent' ,'LIKE', '%'.request('SearchTerm').'%')->get();
-            }else{
-                $Lotterys = UncheckedLottery::where('Worker',\Auth::id())->get();
-            }
 
 
+        } elseif ($this->IsLotteryAdmin()) {
+            $All = '';
         }
-        elseif ($this->IsLotteryAdmin()){
+        return view('Panel.Lottery.UnCheckedLottery')
+            ->with('Lotterys', $Lotterys)
+            ->with('All', $All)
+            ->with('Published', $Published)
+            ->with('Draft', $Draft)
+            ->with('Waiting', $Waiting)
+            ->with('Archive', $Archive);
+    }
 
+
+    public function DadeKavi()
+    {
+        return view('Panel.Lottery.DadeKavi');
+    }
+
+    public function DadeKaviPost(Request $request)
+    {
+        $request->validate([
+            'Text' => 'required|string',
+            'Tedad' => 'required'
+        ]);
+        try {
+            $ch = curl_init(config('Qoreha.RobotUrl'));
+            $headers = array(
+                config('Qoreha.Token')
+            );
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+            curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+            $body = "text=".$request->Text."&count=".$request->Tedad;
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+            curl_setopt($ch, CURLOPT_POSTFIELDS,$body);
+            $Result = curl_exec($ch);
+            $res = json_decode($Result);
+            $res =  preg_replace('/\{/','',$res);
+            $res = preg_replace('/\}/','',$res);
+            $res = preg_replace('/"/','',$res);
+            $res = explode(':',$res)[1];
+            die($res);
+            dd(explode(':',$res)[1]);
+            return RedirectController::Redirect('/panel/Lottery/DadeKavi', 'داده کاوی با موفقیت شروع شد.');
+        } catch (\Exception $exception) {
+            return RedirectController::Redirect('/panel/Lottery/DadeKavi', $exception->getMessage());
         }
-        //$Lotterys = UncheckedLottery::all();
-        return view('Panel.Lottery.UnCheckedLottery',['Lotterys' => $Lotterys]);
     }
 }

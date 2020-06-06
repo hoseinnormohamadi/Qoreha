@@ -5,12 +5,10 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use HasRoles;
     use Notifiable;
 
     /**
@@ -19,7 +17,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'Username','LastName','FirstName', 'email', 'password','Rule','ProfileImage','Bio','PhoneNumber','FaceBook','Twitter'
     ];
 
     /**
@@ -52,5 +50,50 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public static function FullName(){
+        return \Auth::user()->FirstName . ' '. \Auth::user()->LastName;
+    }
+
+    public static function GetUserFullName($FirstName,$LastName){
+        return $FirstName . ' '. $LastName;
+
+    }
+
+    public static function GetRuleName(){
+        if (\Auth::user()->Rule == 'Admin'){
+            return 'ادمین';
+        }elseif (\Auth::user()->Rule == 'Manager'){
+            return 'اپراتور';
+        }elseif (\Auth::user()->Rule == 'LotteryOwner'){
+            return 'صاحب کسب و کار';
+        }elseif (\Auth::user()->Rule == 'Supervisor'){
+            return 'ناظر';
+        }else{
+            return 'کاربر ساده';
+        }
+    }
+
+    public static function GetRuleNameByRule($Rule){
+        if ($Rule == 'Admin'){
+            return 'ادمین';
+        }elseif ($Rule == 'Manager'){
+            return 'اپراتور';
+        }elseif ($Rule == 'LotteryOwner'){
+            return 'صاحب کسب و کار';
+        }elseif ($Rule == 'Supervisor'){
+            return 'ناظر';
+        }else{
+            return 'کاربر ساده';
+        }
+    }
+
+    public static function NoPic(){
+        return '/assets/img/users/NoPic.png';
+    }
+
+    public static function GetPublisher($PublisherId){
+        return User::find($PublisherId);
     }
 }

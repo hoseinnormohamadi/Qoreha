@@ -52,7 +52,7 @@
                         </div>
                         <div class="card-body">
                             <div class="float-right">
-                                <form method="GET" action="/panel/Blog/ShowPosts">
+                                <form method="GET" action="/panel/Blog/AllPosts">
                                     <div class="input-group">
                                         <input type="text" name="SearchTerm" class="form-control" placeholder="جستجو">
                                         <div class="input-group-append">
@@ -90,11 +90,10 @@
                                                 </div>
                                             </td>
                                             <td>
-
-                                                <img alt="تصویر" src="\assets\img\users\user-1.png"
+                                                <a href="#">
+                                                <img alt="تصویر" src="{{$Post->User->ProfileImage}}"
                                                      class="rounded-circle" width="35" data-toggle="title" title="">
-                                                <span class="d-inline-block ml-1">{{$Post->User->name}}</span>
-
+                                                </a>
                                             </td>
                                             <td>{{$Post->PostName}}
                                                 <div class="table-links">
