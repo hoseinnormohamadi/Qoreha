@@ -11,16 +11,6 @@
     </script>
 @endsection
 @section('content')
-    @if(session('errors'))
-
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <strong>پیام سایت</strong>
-            {{session('errors')->first('msg')}}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
     <section class="section">
         <ul class="breadcrumb breadcrumb-style ">
             <li class="breadcrumb-item">
@@ -49,6 +39,10 @@
                                     <a class="nav-link" id="profile-tab2" data-toggle="tab" href="#Icon" role="tab"
                                        aria-selected="false">تنظیمات آیکون</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profile-tab3" data-toggle="tab" href="#Social" role="tab"
+                                       aria-selected="false">تنظیمات شبکه های اجتماعی</a>
+                                </li>
 
 
                             </ul>
@@ -68,12 +62,46 @@
                                                        name="SiteName" value="{{$SiteConfig->SiteName}}">
                                             </div>
                                         </div>
+
+
+
+                                        <div class="form-group row mb-4">
+                                            <label
+                                                class="col-form-label text-md-right col-12 col-md-3 col-lg-3  @error('PhoneNumber') text-danger @enderror">
+                                                شماره تماس
+                                            </label>
+                                            <div class="col-sm-12 col-md-7 ">
+                                                <input type="text"
+                                                       class="form-control @error('PhoneNumber') border border-danger @enderror"
+                                                       name="PhoneNumber" value="{{$SiteConfig->PhoneNumber}}">
+                                            </div>
+                                        </div>
+
+
+
+
+
+                                        <div class="form-group row mb-4">
+                                            <label
+                                                class="col-form-label text-md-right col-12 col-md-3 col-lg-3  @error('Address') text-danger @enderror">
+                                                آدرس
+                                            </label>
+                                            <div class="col-sm-12 col-md-7 ">
+                                                <input type="text"
+                                                       class="form-control @error('Address') border border-danger @enderror"
+                                                       name="Address" value="{{$SiteConfig->Address}}">
+                                            </div>
+                                        </div>
+
+
+
                                         <div class="form-group row mb-4">
                                             <label
                                                 class="col-form-label text-md-right col-12 col-md-3 col-lg-3 @error('SiteAbout') text-danger @enderror">متن
                                                 درباره ما</label>
                                             <div class="col-sm-12 col-md-7">
-                                                <textarea id="mytextarea" name="SiteAbout">{{$SiteConfig->AboutUs}}</textarea>
+                                                <textarea id="mytextarea"
+                                                          name="SiteAbout">{{$SiteConfig->AboutUs}}</textarea>
                                             </div>
                                         </div>
 
@@ -114,6 +142,105 @@
                                         </div>
                                     </form>
                                 </div>
+
+
+                                <div class="tab-pane fade" id="Social" role="tabpanel" aria-labelledby="profile-tab3">
+                                    <form method="post" action="/panel/Site/UpdateSiteSocial"
+                                          enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="card-header">
+                                            <h4>شبکه های اجتماعی</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-group row mb-4">
+                                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3  @error('Facebook') text-danger @enderror">
+                                                    ایدی فیسبوک
+                                                </label>
+                                                <div class="col-sm-12 col-md-7 ">
+                                                    <input type="text"
+                                                           class="form-control @error('Facebook') border border-danger @enderror"
+                                                           name="Facebook" value="{{$SiteConfig->Facebook}}">
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="form-group row mb-4">
+                                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3  @error('Telegram') text-danger @enderror">
+                                                    ایدی کانال تلگرام
+                                                </label>
+                                                <div class="col-sm-12 col-md-7 ">
+                                                    <input type="text"
+                                                           class="form-control @error('Telegram') border border-danger @enderror"
+                                                           name="Telegram" value="{{$SiteConfig->Telegram}}">
+                                                </div>
+                                            </div>
+
+
+
+
+                                            <div class="form-group row mb-4">
+                                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3  @error('instagram') text-danger @enderror">
+                                                    ایدی اینستاگرام
+                                                </label>
+                                                <div class="col-sm-12 col-md-7 ">
+                                                    <input type="text"
+                                                           class="form-control @error('instagram') border border-danger @enderror"
+                                                           name="instagram" value="{{$SiteConfig->instagram}}">
+                                                </div>
+                                            </div>
+
+
+
+
+
+
+                                            <div class="form-group row mb-4">
+                                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3  @error('twitter') text-danger @enderror">
+                                                    ایدی تویتر
+                                                </label>
+                                                <div class="col-sm-12 col-md-7 ">
+                                                    <input type="text"
+                                                           class="form-control @error('twitter') border border-danger @enderror"
+                                                           name="twitter" value="{{$SiteConfig->twitter}}">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group row mb-4">
+                                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3  @error('Enamad') text-danger @enderror">
+                                                    لینک ای-نماد(Enamad.ir)
+                                                </label>
+                                                <div class="col-sm-12 col-md-7 ">
+                                                    <input type="text"
+                                                           class="form-control @error('Enamad') border border-danger @enderror"
+                                                           name="Enamad" value="{{$SiteConfig->Enamad}}">
+                                                </div>
+                                            </div>
+
+
+
+
+
+                                            <div class="form-group row mb-4">
+                                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3  @error('Samandehi') text-danger @enderror">
+                                                    لینک ساماندهی(Samandehi.ir)
+                                                </label>
+                                                <div class="col-sm-12 col-md-7 ">
+                                                    <input type="text"
+                                                           class="form-control @error('Samandehi') border border-danger @enderror"
+                                                           name="Samandehi" value="{{$SiteConfig->Smandehi}}">
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="card-footer text-right">
+                                            <input class="btn btn-primary" type="submit" value="ثبت تغییرات">
+                                        </div>
+                                    </form>
+                                </div>
+
 
                             </div>
                         </div>

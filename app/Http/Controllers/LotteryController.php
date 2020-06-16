@@ -16,19 +16,38 @@ class LotteryController extends Controller
     use Uploader;
     use CustomAuth;
 
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (!$this->IsAdminOrManager()) {
+                return RedirectController::Redirect('/panel/', 'شما اجازه دسترسی به این بخش را ندارید!!!');
+            }
+            return $next($request);
+        });
+    }
+
+
     public function AllLottery()
     {
-
-
         if ($this->IsAdmin()) {
             if (\request('SearchTerm')) {
-                $Lotterys = Lottery::where('LotteryContent', \request('SearchTerm'))->paginate(25);
+                $Lotterys = Lottery::where('LotteryTitle', 'LIKE', '%' . request('SearchTerm') . '%')->paginate(25);
             } elseif (request('Mode')) {
                 $Lotterys = Lottery::where('LotteryStatus', request('Mode'))->paginate(25);
             } else {
                 $Lotterys = Lottery::paginate(25);
             }
             $All = Lottery::all()->count();
+
+        } elseif ($this->IsManager()) {
+            if (\request('SearchTerm')) {
+                $Lotterys = Lottery::where('LotteryTitle', 'LIKE', '%' . request('SearchTerm') . '%')->where('LotteryWorker', \Auth::id())->paginate(25);
+            } elseif (request('Mode')) {
+                $Lotterys = Lottery::where('LotteryStatus', request('Mode'))->where('LotteryWorker', \Auth::id())->paginate(25);
+            } else {
+                $Lotterys = Lottery::where('LotteryWorker', \Auth::id())->paginate(25);
+            }
+            $All = Lottery::where('LotteryWorker', \Auth::id())->count();
 
         }
         return view('Panel.Lottery.Lottery')
@@ -38,10 +57,42 @@ class LotteryController extends Controller
 
     }
 
-    public function Create()
+    public function Add()
     {
-        $Cats = LotteryCat::all();
-        return view('Panel.Lottery.CreateLottery', ['Cats' => $Cats]);
+        $Tags = LotteryCat::all();
+        return view('Panel.Lottery.CreateLottery', ['Tags' => $Tags]);
+    }
+
+    public function Create(Request $request)
+    {
+        $request->validate([
+            'LotteryTitle' => 'required|string|max:50',
+            'LotteryContent' => 'required|string',
+            'LotteryFirstPrize' => 'string',
+            'LotteryPrizes' => 'string',
+            'LotteryType' => 'required|string',
+            'LotteryDate' => 'required|date',
+        ]);
+        try {
+            $Lottery = Lottery::create([
+                'LotteryTitle' => $request->LotteryTitle,
+                'LotteryContent' => $request->LotteryContent,
+                'LotteryFirstPrize' => $request->LotteryFirstPrize,
+                'LotteryPrizes' => json_encode($request->LotteryPrizes),
+                'LotteryType' => $request->LotteryType,
+                'LotteryDate' => $request->LotteryDate,
+                'LotteryImage' => $this->UploadPic($request, 'LotteryImage', 'Lottery', 'Lottery'),
+                'LotteryWorker' => \Auth::id(),
+                'LotteryMode' => 'public',
+            ]);
+            $Lottery->tag()->attach($request->LotteryTags);
+
+            return RedirectController::Redirect('/panel/Lottery/Edit/' . $Lottery->id, 'قرعه کشی با موفقیت ایجاد شد');
+
+        } catch (\Exception $exception) {
+            return RedirectController::Redirect('/panel/Lottery/Create', $exception->getMessage());
+
+        }
     }
 
     public function Edit($id)
@@ -50,7 +101,50 @@ class LotteryController extends Controller
         if ($Lottery == null || empty($Lottery)) {
             return RedirectController::Redirect('/panel/Lottery/AllLottery', 'قرعه کشی مورد نظر پیدا نشد');
         }
-        return view('Panel.Lottery.Edit')->with('Lottery', $Lottery);
+        if (!$this->IsAdmin()) {
+            if (!$this->CheckPublisher($Lottery->LotteryWorker)) {
+                return RedirectController::Redirect('/panel/Lottery/AllLottery', 'قرعه کشی مورد نظر پیدا نشد');
+            }
+        }
+        $Tags = LotteryCat::all();
+        return view('Panel.Lottery.Edit')->with('Lottery', $Lottery)->with('Tags', $Tags);
+    }
+
+
+    public function Update($id, Request $request)
+    {
+        $Lottery = Lottery::find($id);
+        if ($Lottery == null || empty($Lottery)) {
+            return RedirectController::Redirect('/panel/Lottery/AllLottery', 'قرعه کشی مورد نظر پیدا نشد');
+        }
+        if (!$this->IsAdmin()) {
+            if (!$this->CheckPublisher($Lottery->LotteryWorker)) {
+                return RedirectController::Redirect('/panel/Lottery/AllLottery', 'قرعه کشی مورد نظر پیدا نشد');
+            }
+        }
+        $request->validate([
+            'LotteryTitle' => 'required|string|max:50',
+            'LotteryContent' => 'required|string',
+            'LotteryFirstPrize' => 'string',
+            'LotteryPrizes' => 'string',
+            'LotteryType' => 'required|string',
+            'LotteryDate' => 'required|date',
+
+        ]);
+        try {
+            $Lottery->LotteryTitle = $request->LotteryTitle;
+            $Lottery->LotteryContent = $request->LotteryContent;
+            $Lottery->LotteryFirstPrize = $request->LotteryFirstPrize;
+            $Lottery->LotteryPrizes = $request->LotteryPrizes;
+            $Lottery->LotteryType = $request->LotteryType;
+            $Lottery->LotteryDate = $request->LotteryDate;
+            $Lottery->LotteryImage = $request->hasFile('LotteryImage') ? $this->UploadPic($request, 'LotteryImage', 'Lottery', 'Lottery') : $Lottery->LotteryImage ;
+            $Lottery->save();
+            return RedirectController::Redirect('/panel/Lottery/Edit/' . $Lottery->id, 'قرعه کشی با موفقیت ویرایش شد');
+
+        } catch (\Exception $exception) {
+            return RedirectController::Redirect('/panel/Lottery/Create', $exception->getMessage());
+        }
     }
 
     public function GetLottery($id, Request $request)
@@ -85,11 +179,11 @@ class LotteryController extends Controller
                 'LotteryMode' => 'public',
             ]);
             $Lottery->tag()->attach($request->LotteryTags);
-
+            $UncheckedLottery->LotteryStatus = $request->LotteryStatus;
             return RedirectController::Redirect('/panel/Lottery/UncheckedLottery', 'قرعه کشی با موفقیت ایجاد شد');
         } else {
             $UncheckedLottery->LotteryStatus = $request->LotteryStatus;
-            return RedirectController::Redirect('/panel/Lottery/UncheckedLottery','قرعه کشی با موفقیت ویرایش شد');
+            return RedirectController::Redirect('/panel/Lottery/UncheckedLottery', 'قرعه کشی با موفقیت ویرایش شد');
         }
     }
 
@@ -112,7 +206,7 @@ class LotteryController extends Controller
         } elseif ($this->IsManager()) {
             if (\request('GetLottery') == true) {
                 if (UncheckedLottery::where('Worker', \Auth::id())->count() == 0) {
-                    UncheckedLottery::where('Worker', null)->limit(10)->update(['Worker' => \Auth::id()]);
+                    UncheckedLottery::where('Worker', 2)->limit(10)->update(['Worker' => \Auth::id()]);
                 }
                 $Lotterys = UncheckedLottery::where('Worker', \Auth::id())->paginate(25);
             } elseif (\request('SearchTerm')) {
@@ -121,6 +215,11 @@ class LotteryController extends Controller
             } else {
                 $Lotterys = UncheckedLottery::where('Worker', \Auth::id())->paginate(25);
             }
+            $All = UncheckedLottery::where('Worker', \Auth::id())->count();
+            $Published = UncheckedLottery::where('Worker', \Auth::id())->where('LotteryStatus', 'Published')->count();
+            $Draft = UncheckedLottery::where('Worker', \Auth::id())->where('LotteryStatus', 'Draft')->count();
+            $Waiting = UncheckedLottery::where('Worker', \Auth::id())->where('LotteryStatus', 'Waiting')->count();
+            $Archive = UncheckedLottery::where('Worker', \Auth::id())->where('LotteryStatus', 'Archive')->count();
 
 
         } elseif ($this->IsLotteryAdmin()) {
@@ -134,6 +233,7 @@ class LotteryController extends Controller
             ->with('Waiting', $Waiting)
             ->with('Archive', $Archive);
     }
+
 
 
     public function DadeKavi()
@@ -155,18 +255,18 @@ class LotteryController extends Controller
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
             curl_setopt($ch, CURLOPT_HEADER, 0);
-            curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-            $body = "text=".$request->Text."&count=".$request->Tedad;
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $body = "text=" . $request->Text . "&count=" . $request->Tedad;
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-            curl_setopt($ch, CURLOPT_POSTFIELDS,$body);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
             $Result = curl_exec($ch);
             $res = json_decode($Result);
-            $res =  preg_replace('/\{/','',$res);
-            $res = preg_replace('/\}/','',$res);
-            $res = preg_replace('/"/','',$res);
-            $res = explode(':',$res)[1];
+            $res = preg_replace('/\{/', '', $res);
+            $res = preg_replace('/\}/', '', $res);
+            $res = preg_replace('/"/', '', $res);
+            $res = explode(':', $res)[1];
             die($res);
-            dd(explode(':',$res)[1]);
+            dd(explode(':', $res)[1]);
             return RedirectController::Redirect('/panel/Lottery/DadeKavi', 'داده کاوی با موفقیت شروع شد.');
         } catch (\Exception $exception) {
             return RedirectController::Redirect('/panel/Lottery/DadeKavi', $exception->getMessage());

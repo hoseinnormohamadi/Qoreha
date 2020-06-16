@@ -1,14 +1,6 @@
 @extends('Panel.Layuot')
 @section('content')
-    @if(session('errors'))
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>پیام سایت</strong>
-        {{session('errors')->first('msg')}}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    @endif
+
     <section class="section">
         <ul class="breadcrumb breadcrumb-style ">
             <li class="breadcrumb-item">
@@ -46,7 +38,9 @@
                             <div class="float-right">
                                 <form method="GET" action="/panel/Blog/ShowPosts">
                                     <div class="input-group">
-                                        <input type="text" name="SearchTerm" class="form-control" placeholder="جستجو">
+                                        <input type="text" name="SearchTerm"
+                                               value="{{isset($_GET['SearchTerm'])  ? $_GET['SearchTerm'] : ''}}"
+                                               class="form-control" placeholder="جستجو">
                                         <div class="input-group-append">
                                             <button class="btn btn-primary"><i class="fas fa-search"></i></button>
                                         </div>
@@ -90,7 +84,7 @@
                                                 </div>
 
                                             </td>
-                                            <td>{{\Verta::instance($Tag->created_at)->format('Y-m-d')}}</td>
+                                            <td>{{\Verta::instance($Tag->created_at)->format('Y/m/d')}}</td>
                                         </tr>
                                     @endforeach
                                     </tbody>

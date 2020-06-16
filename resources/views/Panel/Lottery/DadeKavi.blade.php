@@ -17,13 +17,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h4>داده کاوی کنید.</h4>
-                            <h4>
-                                @if ($errors->any())
-                                    @foreach ($errors->all() as $error)
-                                        <div>{{$error}}</div>
-                                    @endforeach
-                                @endif
-                            </h4>
+
                         </div>
                         <div class="card-body">
                             <form method="POST" action="/panel/Lottery/DadeKaviPost">

@@ -3,23 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\AccessLevelManager;
+use App\Traits\CustomAuth;
 use App\Traits\Uploader;
 use Illuminate\Http\Request;
 
 class AccessLevelManagerController extends Controller
 {
     use Uploader;
-
+    use CustomAuth;
     public function UpgradeToSupervisor(Request $request)
     {
-        $Accesslevelmanager = AccessLevelManager::where('Userid',\Auth::id())->firstorfail();
-        if (!empty($Accesslevelmanager)){
+        if ($this->IsAdminOrManager() || $this->IsSupervisor() ){
+            return RedirectController::Redirect('/panel/', 'سطح دسترسی شما بالاتر از درخواست شما میباشد');
+        }
+                $Accesslevelmanager = AccessLevelManager::where('Userid',\Auth::id())->where('Status' , 'Waiting')->get();
+        if ($Accesslevelmanager->count() > 0){
             return RedirectController::Redirect('/panel/User/Upgrade', 'درخواست شما از قبل ثبت شده بود.لطفا تا تایید صبر کنید.');
         }
+
         $request->validate([
             'CodeMeli' => 'required|min:8|max:10',
             'Address' => 'required|min:10|string',
-            'About' => 'string',
+            'About' => 'required|string',
             'identityCartPic' => 'required|image',
         ]);
         try {
@@ -43,8 +48,11 @@ class AccessLevelManagerController extends Controller
 
     public function UpgradeToManager(Request $request)
     {
-        $Accesslevelmanager = AccessLevelManager::where('Userid',\Auth::id())->firstorfail();
-        if (!empty($Accesslevelmanager)){
+        if ($this->IsAdminOrManager()){
+            return RedirectController::Redirect('/panel/', 'سطح دسترسی شما بالاتر از درخواست شما میباشد');
+        }
+                $Accesslevelmanager = AccessLevelManager::where('Userid',\Auth::id())->where('Status' , 'Waiting')->get();
+        if ($Accesslevelmanager->count() > 0){
             return RedirectController::Redirect('/panel/User/Upgrade', 'درخواست شما از قبل ثبت شده بود.لطفا تا تایید صبر کنید.');
         }
         $request->validate([
@@ -73,8 +81,8 @@ class AccessLevelManagerController extends Controller
     }
     public function UpgradeToLotteryOwner(Request $request)
     {
-        $Accesslevelmanager = AccessLevelManager::where('Userid',\Auth::id())->where('Status','Waiting')->firstorfail();
-        if (!empty($Accesslevelmanager)){
+        $Accesslevelmanager = AccessLevelManager::where('Userid',\Auth::id())->where('Status','Waiting')->get();
+        if ($Accesslevelmanager->count() > 0){
             return RedirectController::Redirect('/panel/User/Upgrade', 'درخواست شما از قبل ثبت شده بود.لطفا تا تایید صبر کنید.');
         }
         $request->validate([

@@ -1,15 +1,5 @@
 @extends('Panel.Layuot')
 @section('content')
-    @if(session('errors'))
-
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <strong>پیام سایت</strong>
-            {{session('errors')->first('msg')}}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
     <section class="section">
         <ul class="breadcrumb breadcrumb-style ">
             <li class="breadcrumb-item">
@@ -28,13 +18,7 @@
                 <div class="col-12 col-md-12 col-lg-12">
                     <div class="card">
                         <div class="padding-20">
-                            <h4>
-                                @if ($errors->any())
-                                    @foreach ($errors->all() as $error)
-                                        <div>{{$error}}</div>
-                                    @endforeach
-                                @endif
-                            </h4>
+
                             <ul class="nav nav-tabs" id="myTab2" role="tablist">
                                 @if(Auth::user()->Rule == 'User')
                                 <li class="nav-item">

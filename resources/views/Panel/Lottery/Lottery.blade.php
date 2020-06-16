@@ -54,7 +54,9 @@
                             <div class="float-right">
                                 <form method="GET" action="/panel/Lottery/AllLottery">
                                     <div class="input-group">
-                                        <input type="text" name="SearchTerm" class="form-control" placeholder="جستجو">
+                                        <input type="text" name="SearchTerm"
+                                               value="{{isset($_GET['SearchTerm'])  ? $_GET['SearchTerm'] : ''}}"
+                                               class="form-control" placeholder="جستجو">
                                         <div class="input-group-append">
                                             <button class="btn btn-primary"><i class="fas fa-search"></i></button>
                                         </div>
@@ -106,7 +108,7 @@
                                                 دسته بندی نشده
                                                 {{--<a href="?tag={{$Lottery->tag[0]->name}}">{{$Lottery->tag[0]->name}}</a>--}}
                                             </td>
-                                            <td>{{\Verta::instance($Lottery->created_at)->format('Y-m-d')}}</td>
+                                            <td>{{\Verta::instance($Lottery->created_at)->format('Y/m/d')}}</td>
 
                                         </tr>
                                     @endforeach

@@ -1,14 +1,6 @@
 @extends('Panel.Layuot')
 @section('content')
-    @if(session('errors'))
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>پیام سایت</strong>
-        {{session('errors')->first('msg')}}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    @endif
+
     <section class="section">
         <ul class="breadcrumb breadcrumb-style ">
             <li class="breadcrumb-item">
@@ -16,9 +8,9 @@
                     <i class="fas fa-home"></i></a>
             </li>
             <li class="breadcrumb-item">
-قرعه کشی ها
+                فروشگاه
             </li>
-            <li class="breadcrumb-item"> قرعه کشی های خانگی</li>
+            <li class="breadcrumb-item"> دسته بندی ها</li>
         </ul>
         <div class="section-body">
             <div class="row">
@@ -27,17 +19,9 @@
                         <div class="card-body">
                                 <ul class="nav nav-pills">
                                     <li class="nav-item">
-                                        <a class="nav-link active" href="?Mode=">همه <span
-                                                class="badge badge-primary">{{$Published+$Draft}}</span></a>
+                                        <p class="nav-link active"> <span class="badge badge-primary">{{$Tags->count()}}</span>دسته بندی</p>
                                     </li>
-                                    <li class="nav-item ">
-                                        <a class="nav-link text-info" href="?Mode=inWay">در جریان <span
-                                                class="badge badge-info">{{$inWay}}</span></a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-danger" href="?Mode=finished">پایان یافته <span
-                                                class="badge badge-danger">{{$finished}}</span></a>
-                                    </li>
+
 
                                 </ul>
                         </div>
@@ -48,13 +32,15 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>همه قرعه کشی های خانگی</h4>
+                            <h4>همه دسته بندی ها</h4>
                         </div>
                         <div class="card-body">
                             <div class="float-right">
-                                <form method="GET" action="/panel/Lottery/Home/All">
+                                <form method="GET" action="/panel/Blog/ShowPosts">
                                     <div class="input-group">
-                                        <input type="text" name="SearchTerm" class="form-control" placeholder="جستجو">
+                                        <input type="text" name="SearchTerm"
+                                               value="{{isset($_GET['SearchTerm'])  ? $_GET['SearchTerm'] : ''}}"
+                                               class="form-control" placeholder="جستجو">
                                         <div class="input-group-append">
                                             <button class="btn btn-primary"><i class="fas fa-search"></i></button>
                                         </div>
@@ -74,13 +60,10 @@
                                                 <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
                                             </div>
                                         </th>
-                                        <th>ایجاد کننده</th>
-                                        <th>اعضا</th>
-                                        <th>مقدار قرعه کشی</th>
+                                        <th>نام دسته بندی</th>
                                         <th>ایجاد شده در</th>
-                                        <th>وضعیت</th>
                                     </tr>
-                                    @foreach($Lotterys as $Lottery)
+                                    @foreach($Tags as $Tag)
                                         <tr>
                                             <td>
                                                 <div class="custom-checkbox custom-control">
@@ -90,46 +73,24 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <a href="#">
-                                                <img alt="تصویر" src="{{$Lottery->User->ProfileImage}}"
-                                                     class="rounded-circle" width="35" data-toggle="title" title="">
-                                                </a>
-                                            </td>
-                                            <td>{{$Lottery->Afrad}}
+                                                {{$Tag->name}}
                                                 <div class="table-links">
                                                     <a href="#">مشاهده</a>
                                                     <div class="bullet"></div>
-                                                    <a href="/panel/Lottery/Home/Edit/{{$Post->id}}">ویرایش کنید</a>
+                                                    <a href="/panel/Shop/Category/Edit/{{$Tag->id}}">ویرایش کنید</a>
                                                     <div class="bullet"></div>
-                                                    <a href="/panel/Lottery/Home/Delete/{{$Post->id}}" class="text-danger">زباله
+                                                    <a href="/panel/Shop/Category/Delete/{{$Tag->id}}" class="text-danger">زباله
                                                         ها</a>
                                                 </div>
-                                            </td>
-                                            <td>
-                                                {{$Lottery->KollPoll}}
-                                            </td>
-                                            <td>{{\Verta::instance($Post->created_at)->format('Y-m-d')}}</td>
-                                            @if($Post->Status == 'finished')
-                                                <td>
-                                                    <div class="badge badge-danger">پایان یافته</div>
-                                                </td>
 
-                                            @elseif($Post->Status == 'inWay')
-                                                <td>
-                                                    <div class="badge badge-primary">در حال اجرا</div>
-                                                </td>
-                                            @endif
-
+                                            </td>
+                                            <td>{{\Verta::instance($Tag->created_at)->format('Y/m/d')}}</td>
                                         </tr>
                                     @endforeach
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="float-right">
-                                <nav>
-                                    {!! $Lotterys->links() !!}
-                                </nav>
-                            </div>
+
                         </div>
                     </div>
                 </div>

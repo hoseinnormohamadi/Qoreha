@@ -29,132 +29,10 @@
                     <li><a href="#" class="nav-link nav-link-lg fullscreen-btn">
                             <i data-feather="maximize"></i>
                         </a></li>
-                    <li>
-                        <form class="form-inline mr-auto">
-                            <div class="search-element">
-                                <input class="form-control" type="search" placeholder="جستجو"
-                                       aria-label="جستجو کردن"
-                                       data-width="200">
-                                <button class="btn" type="submit">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </div>
-                        </form>
-                    </li>
                 </ul>
             </div>
             <ul class="navbar-nav navbar-right">
-                <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
-                                                             class="nav-link nav-link-lg message-toggle"><i
-                            data-feather="mail"></i>
-                        <span class="badge headerBadge1">
-                6 </span> </a>
-                    <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
-                        <div class="dropdown-header">
-                            پیام ها
-                            <div class="float-right">
-                                <a href="#">نامه های خوانده شده</a>
-                            </div>
-                        </div>
-                        <div class="dropdown-list-content dropdown-list-message">
-                            <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar
-                    text-white"> <img alt="image" src="\assets\img\users\user-1.png" class="rounded-circle">
-                  </span> <span class="dropdown-item-desc"> <span class="message-user">نام کاربر </span>
-                    <span class="time messege-text">لطفا ایمیل خود زا چک کنید.</span>
-                    <span class="time">2 دقیقه قبل</span>
-                  </span>
-                            </a>
-                            <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar text-white">
-                    <img alt="image" src="\assets\img\users\user-2.png" class="rounded-circle">
-                  </span> <span class="dropdown-item-desc"> <span class="message-user">سارا </span> <span
-                                        class="time messege-text"> متن ساختگی </span>
-                    <span class="time">5 دقیقه قبل </span>
-                  </span>
-                            </a>
-                            <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar text-white">
-                    <img alt="image" src="\assets\img\users\user-4.png" class="rounded-circle">
-                  </span> <span class="dropdown-item-desc"> <span class="message-user">نام کاربر </span> <span
-                                        class="time messege-text">
-                      لورم متن ساختگی
-                    </span> <span class="time">30 دقیقه قبل </span>
-                  </span>
-                            </a>
-                            <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar
-            text-white"> <img alt="image" src="\assets\img\users\user-1.png" class="rounded-circle">
-                  </span> <span class="dropdown-item-desc"> <span class="message-user">نام کاربر </span>
-                    <span class="time messege-text">لطفا ایمیل خود زا چک کنید.</span>
-                    <span class="time">2 دقیقه قبل</span>
-                  </span>
-                            </a>
-                            <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar text-white">
-                    <img alt="image" src="\assets\img\users\user-2.png" class="rounded-circle">
-                  </span> <span class="dropdown-item-desc"> <span class="message-user">سارا </span> <span
-                                        class="time messege-text"> متن ساختگی </span>
-                    <span class="time">5 دقیقه قبل </span>
-                  </span>
-                            </a>
-                            <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar text-white">
-                    <img alt="image" src="\assets\img\users\user-4.png" class="rounded-circle">
-                  </span> <span class="dropdown-item-desc"> <span class="message-user">نام کاربر </span> <span
-                                        class="time messege-text">
-                      لورم متن ساختگی
-                    </span> <span class="time">30 دقیقه قبل </span>
-                  </span>
-                            </a>
-                        </div>
-                        <div class="dropdown-footer text-center">
-                            <a href="#">مشاهده همه <i class="fas fa-chevron-left"></i></a>
-                        </div>
-                    </div>
-                </li>
-                <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
-                                                             class="nav-link notification-toggle nav-link-lg"><i
-                            data-feather="bell" class="bell"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
-                        <div class="dropdown-header">
-                            اطلاعیه
-                            <div class="float-right">
-                                <a href="#">نامه های خوانده شده</a>
-                            </div>
-                        </div>
-                        <div class="dropdown-list-content dropdown-list-icons">
-                            <a href="#" class="dropdown-item dropdown-item-unread"> <span
-                                    class="dropdown-item-icon bg-primary text-white"> <i class="fas
-												fa-code"></i>
-                  </span> <span class="dropdown-item-desc">به روز رسانی الگو اکنون در دسترس است! <span class="time">2 دقیقه پیش</span>
-                  </span>
-                            </a> <a href="#" class="dropdown-item"> <span
-                                    class="dropdown-item-icon bg-info text-white"> <i
-                                        class="far
-												fa-user"></i>
-                  </span> <span class="dropdown-item-desc"> <b>شما</b> و <b>سارا</b> اکنون <span class="time">10 ساعت قبل </span><b>باهم دوست</b> هستید<span
-                                        class="time"></span>
-                  </span>
-                            </a> <a href="#" class="dropdown-item"> <span
-                                    class="dropdown-item-icon bg-success text-white"> <i class="fas
-												fa-check"></i>
-                  </span> <span class="dropdown-item-desc"> <b>امیر</b> وظیفه <b>رفع خط هدر را</b> به <b>موفقیت انجام داد</b> <span
-                                        class="time">12 ساعت قبل </span>
-                  </span>
-                            </a> <a href="#" class="dropdown-item"> <span
-                                    class="dropdown-item-icon bg-danger text-white"> <i
-                                        class="fas fa-exclamation-triangle"></i>
-                  </span> <span class="dropdown-item-desc">کمبود فضای دیسک. بیایید آن را تمیز کنیم! <span class="time">17 ساعت قبل</span>
-                  </span>
-                            </a> <a href="#" class="dropdown-item"> <span
-                                    class="dropdown-item-icon bg-info text-white"> <i
-                                        class="fas
-												fa-bell"></i>
-                  </span> <span class="dropdown-item-desc">به الگوی داشبورد خوش آمدید! <span class="time">دیروز</span>
-                  </span>
-                            </a>
-                        </div>
-                        <div class="dropdown-footer text-center">
-                            <a href="#">مشاهده همه <i class="fas fa-chevron-left"></i></a>
-                        </div>
-                    </div>
-                </li>
+
                 <li class="dropdown"><a href="#" data-toggle="dropdown"
                                         class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="تصویر"
                                                                                                          src="{{Auth::user()->ProfileImage}}"
@@ -162,9 +40,7 @@
                         <span class="d-sm-none d-lg-inline-block"></span></a>
                     <div class="dropdown-menu dropdown-menu-right pullDown">
                         <div class="dropdown-title">{{Auth::user()->name}}</div>
-                        <a href="timeline.html" class="dropdown-item has-icon"> <i class="fas fa-bolt"></i>
-                            فعالیت ها
-                        </a> <a href="/panel/User/Profile" class="dropdown-item has-icon"> <i class="fas fa-cog"></i>
+                        <a href="/panel/User/Profile" class="dropdown-item has-icon"> <i class="fas fa-cog"></i>
                             تنظیمات
                         </a>
                         <div class="dropdown-divider"></div>
@@ -205,7 +81,7 @@
                         <a href="/panel/" class="nav-link"><i class="fas fa-desktop"></i><span>داشبورد</span></a>
                     </li>
                     @if(config('Qoreha.BlogActivate') != false)
-                        @if(Auth::user()->Rule == 'Admin'|| Auth::user()->Rule == ' Manager')
+                        @if(Auth::user()->Rule == 'Admin'|| Auth::user()->Rule == 'Manager')
                             <li class="dropdown {{(request()->segment(2) == 'Blog') ? 'active': ''}}">
                                 <a href="#" class="menu-toggle nav-link has-dropdown"><i class="fas fa-blog"></i><span>وبلاگ</span></a>
                                 <ul class="dropdown-menu">
@@ -220,27 +96,83 @@
 
 
 
-                    @if(Auth::user()->Rule == 'Admin'|| Auth::user()->Rule == ' Manager'|| Auth::user()->Rule == 'LotteryOwner')
+                    @if(Auth::user()->Rule == 'Admin'|| Auth::user()->Rule == 'Manager'|| Auth::user()->Rule == 'LotteryOwner')
                         <li class="dropdown {{(request()->segment(2) == 'Lottery') ? 'active': ''}}">
                             <a href="#" class="menu-toggle nav-link has-dropdown"><i class="fas fa-gifts"></i><span>قرعه کشی ها</span></a>
                             <ul class="dropdown-menu">
                                 <li><a class="nav-link" href="/panel/Lottery/AllLottery">مدیریت قرعه کشی ها</a></li>
                                 @if(Auth::user()->Rule == 'Admin'|| Auth::user()->Rule == 'Manager')
                                     <li><a class="nav-link" href="/panel/Lottery/Create">افزودن قرعه کشی</a></li>
-                                    <li><a class="nav-link" href="/panel/Lottery/Home/All">مدیریت قرعه کشی خانگی</a></li>
-                                    <li><a class="nav-link" href="/panel/Lottery/Home/Add">افزودن قرعه کشی خانگی</a></li>
-                                    <li><a class="nav-link" href="/panel/Lottery/Category/All">مدیریت دسته بندی ها</a></li>
-                                    <li><a class="nav-link" href="/panel/Lottery/Category/Add">افزودن دسته بندی</a></li>
+                                    @if(Auth::user()->Rule == 'Admin')
+                                        <li><a class="nav-link" href="/panel/Lottery/Category/All">مدیریت دسته بندی
+                                                ها</a></li>
+                                        <li><a class="nav-link" href="/panel/Lottery/Category/Add">افزودن دسته بندی</a>
+                                        </li>
+                                    @endif
                                     <li><a class="nav-link" href="/panel/Lottery/UncheckedLottery">قرعه کشی های تایید
-                                            نشده</a>
-                                    </li>
+                                            نشده</a></li>
                                     <li><a class="nav-link" href="/panel/Lottery/DadeKavi">داده کاوی</a></li>
 
                                 @endif
                             </ul>
                         </li>
                     @endif
+
+
+                    <li class="dropdown {{(request()->segment(2) == 'Ads') ? 'active': ''}}">
+                        <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                                class="fa fa-ticket-alt"></i><span>بدون قرعه کشی برنده باش</span></a>
+                        <ul class="dropdown-menu">
+                            <li><a class="nav-link" href="/panel/WinWithOutLottery/All">مدیریت</a></li>
+                            <li><a class="nav-link" href="/panel/WinWithOutLottery/Add">افزودن</a></li>
+                        </ul>
+                    </li>
+
+
+                    <li class="dropdown {{(request()->segment(2) == 'HomeLottery') ? 'active': ''}}">
+                        <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                                class="fa fa-gift"></i><span>قرعه کشی خانگی</span></a>
+                        <ul class="dropdown-menu">
+                            <li><a class="nav-link" href="/panel/HomeLottery/All">مدیریت قرعه کشی ها</a></li>
+                            <li><a class="nav-link" href="/panel/HomeLottery/Add">افزودن قرعه کشی</a></li>
+                        </ul>
+                    </li>
+
                     @if(Auth::user()->Rule == 'Admin')
+                        <li class="dropdown {{(request()->segment(2) == 'Shop') ? 'active': ''}}">
+                            <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                                    class="fa fa-shopping-basket"></i><span>فروشگاه</span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="nav-link" href="/panel/Shop/All">مدیریت کالا ها</a></li>
+                                <li><a class="nav-link" href="/panel/Shop/Add">افزودن کالا</a></li>
+                                <li><a class="nav-link" href="/panel/Shop/Category/Add">افزودن دسته بندی</a></li>
+                                <li><a class="nav-link" href="/panel/Shop/Category/All">مدیریت دسته بندی ها</a></li>
+
+                            </ul>
+                        </li>
+
+
+
+                        <li class="dropdown {{(request()->segment(2) == 'Ads') ? 'active': ''}}">
+                            <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                                    class="fas fa-ad"></i><span>تبلیغات</span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="nav-link" href="/panel/Ads/All">مدیریت تبلیغات</a></li>
+                                <li><a class="nav-link" href="/panel/Ads/Add">افزودن تبلیغ</a></li>
+                            </ul>
+                        </li>
+
+
+                        <li class="dropdown {{(request()->segment(2) == 'LinkTrade') ? 'active': ''}}">
+                            <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                                    class="fas fa-link"></i><span>تبادل لینک</span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="nav-link" href="/panel/LinkTrade/All">مدیریت لینک ها</a></li>
+                                <li><a class="nav-link" href="/panel/LinkTrade/Add">افزودن لینک</a></li>
+                            </ul>
+                        </li>
+
+
                         <li class="dropdown {{(request()->segment(2) == 'Users') ? 'active': ''}}">
                             <a href="#" class="menu-toggle nav-link has-dropdown"><i
                                     class="fas fa-user"></i><span>کاربران</span></a>
@@ -250,14 +182,8 @@
                                 <li><a class="nav-link" href="/panel/Users/ManageRequest">درخواست های ارتقاء سطح دسترسی</a></li>
                             </ul>
                         </li>
-                        <li class="dropdown {{(request()->segment(2) == 'Site') ? 'active': ''}}">
-                            <a href="/panel/Site/Setting/" class="nav-link"><i
-                                    class="fas fa-server"></i><span>تنظیمات سایت</span></a>
-                        </li>
 
-                        @endif
-
-
+                    @endif
 
 
                     <li class="dropdown {{(request()->segment(2) == 'User') ? 'active': ''}}">
@@ -272,6 +198,14 @@
                     </li>
 
 
+                    @if(Auth::user()->Rule == 'Admin')
+
+                        <li class="dropdown {{(request()->segment(2) == 'Site') ? 'active': ''}}">
+                            <a href="/panel/Site/Setting/" class="nav-link"><i
+                                    class="fas fa-server"></i><span>تنظیمات سایت</span></a>
+                        </li>
+
+                    @endif
 
                 </ul>
             </aside>
@@ -280,8 +214,44 @@
         <!-- Main Content -->
 
         <div class="main-content">
+
+            <div class="modal fade" id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">پیام سایت</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div
+                            class="modal-body">
+
+
+                            @if($errors->any())
+                                @foreach ($errors->all() as $error)
+                                    <div>{{$error}}</div>
+                                    <br>
+                                @endforeach
+
+                            @elseif(session('errors'))
+                                {{session('errors')->first('msg')}}
+                            @endif
+
+
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">متوجه شدم</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             @yield('content')
-            <?php /*require_once 'Template/footer.php'*/?>
         </div>
     </div>
 </div>
@@ -294,12 +264,22 @@
 <script src="\assets\bundles\amcharts4\charts.js"></script>
 <script src="\assets\bundles\amcharts4\animated.js"></script>
 <script src="\assets\bundles\jquery.sparkline.min.js"></script>
+<script src="\assets\bundles\prism\prism.js"></script>
+
 <!-- Page Specific JS File -->
 <script src="\assets\js\page\index.js"></script>
 <!-- Template JS File -->
 <script src="\assets\js\scripts.js"></script>
 <!-- Custom JS File -->
 <script src="\assets\js\custom.js"></script>
+
+@if(session('errors'))
+    <script type="text/javascript">
+        $(window).on('load', function () {
+            $('#myModal').modal('show');
+        });
+    </script>
+@endif
 
 @yield('js')
 </body>

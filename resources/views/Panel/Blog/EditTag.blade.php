@@ -1,15 +1,4 @@
 @extends('Panel.Layuot')
-@section('header')
-    <script src="/assets/Plugin/tinymce/tinymce.min.js"></script>
-    <script type="text/javascript">
-        tinymce.init({
-            selector: '#mytextarea',
-            language: 'fa',
-            branding: false,
-            height: 300
-        });
-    </script>
-@endsection
 @section('content')
     @if(session('errors'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -36,13 +25,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h4>دسته بندی  را ویرایش کنید.</h4>
-                            <h4>
-                                @if ($errors->any())
-                                    @foreach ($errors->all() as $error)
-                                        <div>{{$error}}</div>
-                                    @endforeach
-                                @endif
-                            </h4>
+
                         </div>
                         <div class="card-body">
                             <form method="POST" action="/panel/Blog/EditTag/{{$Tag->id}}" enctype="multipart/form-data">

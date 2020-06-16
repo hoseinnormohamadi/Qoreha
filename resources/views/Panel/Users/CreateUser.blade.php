@@ -1,14 +1,5 @@
 @extends('Panel.Layuot')
 @section('content')
-    @if(session('errors'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>پیام سایت</strong>
-            {{session('errors')->first('msg')}}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
     <section class="section">
         <ul class="breadcrumb breadcrumb-style ">
 
@@ -25,15 +16,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h4>کاربر جدیدی ایجاد کنید.</h4>
-                            <h4>
-                                @if ($errors->any())
-                                    @foreach ($errors->all() as $error)
-                                        <br>
-                                        <br>
-                                        <div>{{$error}}</div>
-                                    @endforeach
-                                @endif
-                            </h4>
+
                         </div>
                         <div class="card-body">
                             <form method="POST" action="/panel/Users/Add" enctype="multipart/form-data">

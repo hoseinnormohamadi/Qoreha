@@ -28,7 +28,7 @@ trait Uploader
         }
         elseif($mode == 'Post') {
             $orginalPath = '/Uploads/' . $folder . '/' . date('Y/m/d' . '/');
-            $path = public_path('Uploads/' . $folder . '/' . date('Y/m/d'));
+            $path = public_path($orginalPath);
         }
         $imageName = bin2hex(random_bytes(32)) . '.jpg';
         if (!file_exists($path)) {

