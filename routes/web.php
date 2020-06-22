@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Auth::routes();
+Route::get('/install', 'WebController@Admin');
 //Account Routes
 Route::group(['prefix' => 'Account'], function () {
     Route::get('/ActivateAccount', 'UsersController@verifyAccount');
