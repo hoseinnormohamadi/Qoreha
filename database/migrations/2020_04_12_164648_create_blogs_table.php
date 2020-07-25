@@ -20,7 +20,7 @@ class CreateBlogsTable extends Migration
             $table->string('PostImage');
             $table->enum('PostStatus',['Published','Draft']);
             $table->unsignedBigInteger('PostPublisher');
-            $table->foreign('PostPublisher')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('PostPublisher')->on('users')->references('id')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -84,6 +84,7 @@ class LotteryController extends Controller
                 'LotteryImage' => $this->UploadPic($request, 'LotteryImage', 'Lottery', 'Lottery'),
                 'LotteryWorker' => \Auth::id(),
                 'LotteryMode' => 'public',
+                'Category' => $request->LotteryTags,
             ]);
             $Lottery->tag()->attach($request->LotteryTags);
 
@@ -138,6 +139,7 @@ class LotteryController extends Controller
             $Lottery->LotteryPrizes = $request->LotteryPrizes;
             $Lottery->LotteryType = $request->LotteryType;
             $Lottery->LotteryDate = $request->LotteryDate;
+            $Lottery->Category = $request->LotteryTags;
             $Lottery->LotteryImage = $request->hasFile('LotteryImage') ? $this->UploadPic($request, 'LotteryImage', 'Lottery', 'Lottery') : $Lottery->LotteryImage ;
             $Lottery->save();
             return RedirectController::Redirect('/panel/Lottery/Edit/' . $Lottery->id, 'قرعه کشی با موفقیت ویرایش شد');

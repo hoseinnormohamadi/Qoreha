@@ -97,6 +97,27 @@
                                 </div>
 
 
+
+                                <div class="form-group row mb-4">
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3  @error('LotteryScore') text-danger @enderror">امتیاز قرعه کشی</label>
+                                    <div class="col-sm-12 col-md-7 ">
+                                        <input type="text" class="form-control @error('LotteryScore') border border-danger @enderror" name="LotteryScore">
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="form-group row mb-4">
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3  @error('LotteryScore') text-danger @enderror">برچسب ها</label>
+                                    <div class="col-sm-12 col-md-7 ">
+                                        <small>تگ ها را با # از هم جدا کنید</small>
+
+                                        <input type="text" class="form-control @error('LotteryScore') border border-danger @enderror" name="LotteryScore">
+                                    </div>
+                                </div>
+
+
                                 <div class="form-group row mb-4">
                                     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">نوع قرعه کشی</label>
                                     <div class="col-sm-12 col-md-7">

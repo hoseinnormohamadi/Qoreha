@@ -6,13 +6,13 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <title>{{\App\Site::SiteName()}}</title>
     <!-- General CSS Files -->
-    <link rel="stylesheet" href="\assets\css\app.min.css">
+    <link rel="stylesheet" href="{{asset('assets\css\app.min.css')}}">
     <!-- Template CSS -->
-    <link rel="stylesheet" href="\assets\css\style.css">
-    <link rel="stylesheet" href="\assets\css\components.css">
+    <link rel="stylesheet" href="{{asset('assets\css\style.css')}}">
+    <link rel="stylesheet" href="{{asset('assets\css\components.css')}}">
     <!-- Custom style CSS -->
-    <link rel="stylesheet" href="\assets\css\custom.css">
-    <link rel='shortcut icon' type='image/x-icon' href='{{\App\Site::SiteIcon()}}'>
+    <link rel="stylesheet" href="{{asset('assets\css\custom.css')}}">
+    <link rel='shortcut icon' type='image/x-icon' href='{{asset(\App\Site::SiteIcon())}}'>
     @yield('header')
 </head>
 
@@ -61,8 +61,8 @@
         <div class="main-sidebar sidebar-style-2">
             <aside id="sidebar-wrapper">
                 <div class="sidebar-brand">
-                    <a href="/panel"> <img alt="تصویر" src="{{\App\Site::SiteIcon()}}" class="header-logo"> <span
-                            class="logo-name">{{config('app.name')}}</span>
+                    <a href="/panel"> <img alt="تصویر" src="{{asset(App\Site::SiteIcon())}}" class="header-logo"> <span
+                            class="logo-name">{{App\Site::SiteName()}}</span>
                     </a>
                 </div>
                 <div class="sidebar-user">
@@ -101,7 +101,7 @@
                             <a href="#" class="menu-toggle nav-link has-dropdown"><i class="fas fa-gifts"></i><span>قرعه کشی ها</span></a>
                             <ul class="dropdown-menu">
                                 <li><a class="nav-link" href="/panel/Lottery/AllLottery">مدیریت قرعه کشی ها</a></li>
-                                @if(Auth::user()->Rule == 'Admin'|| Auth::user()->Rule == 'Manager')
+                                @if(Auth::user()->Rule == 'Admin'|| Auth::user()->Rule == 'Manager'|| Auth::user()->Rule == 'LotteryOwner')
                                     <li><a class="nav-link" href="/panel/Lottery/Create">افزودن قرعه کشی</a></li>
                                     @if(Auth::user()->Rule == 'Admin')
                                         <li><a class="nav-link" href="/panel/Lottery/Category/All">مدیریت دسته بندی
@@ -109,17 +109,21 @@
                                         <li><a class="nav-link" href="/panel/Lottery/Category/Add">افزودن دسته بندی</a>
                                         </li>
                                     @endif
-                                    <li><a class="nav-link" href="/panel/Lottery/UncheckedLottery">قرعه کشی های تایید
-                                            نشده</a></li>
-                                    <li><a class="nav-link" href="/panel/Lottery/DadeKavi">داده کاوی</a></li>
-
-                                @endif
+                                    @if(Auth::user()->Rule == 'Admin'|| Auth::user()->Rule == 'Manager')
+                                        <li><a class="nav-link" href="/panel/Lottery/UncheckedLottery">قرعه کشی های
+                                                تایید
+                                                نشده</a></li>
+                                    @endif
+                                        @if(Auth::user()->Rule == 'Admin')
+                                            <li><a class="nav-link" href="/panel/Lottery/DadeKavi">داده کاوی</a></li>
+                                        @endif
+                                    @endif
                             </ul>
                         </li>
                     @endif
 
 
-                    <li class="dropdown {{(request()->segment(2) == 'Ads') ? 'active': ''}}">
+                    <li class="dropdown {{(request()->segment(2) == 'WinWithOutLottery') ? 'active': ''}}">
                         <a href="#" class="menu-toggle nav-link has-dropdown"><i
                                 class="fa fa-ticket-alt"></i><span>بدون قرعه کشی برنده باش</span></a>
                         <ul class="dropdown-menu">
@@ -153,6 +157,20 @@
 
 
 
+
+
+                        <li class="dropdown {{(request()->segment(2) == 'Slider') ? 'active': ''}}">
+                            <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                                    class="fa fa-sliders-h"></i><span>اسلایدر</span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="nav-link" href="/panel/Slider/All">مدیریت اسلایدر</a></li>
+                                <li><a class="nav-link" href="/panel/Slider/Add">افزودن اسلایدر</a></li>
+
+                            </ul>
+                        </li>
+
+
+
                         <li class="dropdown {{(request()->segment(2) == 'Ads') ? 'active': ''}}">
                             <a href="#" class="menu-toggle nav-link has-dropdown"><i
                                     class="fas fa-ad"></i><span>تبلیغات</span></a>
@@ -161,6 +179,8 @@
                                 <li><a class="nav-link" href="/panel/Ads/Add">افزودن تبلیغ</a></li>
                             </ul>
                         </li>
+
+
 
 
                         <li class="dropdown {{(request()->segment(2) == 'LinkTrade') ? 'active': ''}}">
@@ -179,10 +199,22 @@
                             <ul class="dropdown-menu">
                                 <li><a class="nav-link" href="/panel/Users/All">مدیریت کاربران</a></li>
                                 <li><a class="nav-link" href="/panel/Users/Add">افزودن کاربر</a></li>
-                                <li><a class="nav-link" href="/panel/Users/ManageRequest">درخواست های ارتقاء سطح دسترسی</a></li>
+                                <li><a class="nav-link" href="/panel/Users/ManageRequest">درخواست های ارتقاء سطح
+                                        دسترسی</a></li>
                             </ul>
                         </li>
 
+                    @endif
+
+                    @if(Auth::user()->Rule == 'Admin' || Auth::user()->Rule == 'Manager')
+                        <li class="dropdown {{(request()->segment(2) == 'Contact') ? 'active': ''}}">
+                            <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                                    class="fas fa-inbox"></i><span>پیام های کاربران</span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="nav-link" href="/panel/Contact/All">مدیریت پیام ها</a></li>
+                                <li><a class="nav-link" href="/panel/Contact/Add">افزودن پیام</a></li>
+                            </ul>
+                        </li>
                     @endif
 
 
@@ -257,21 +289,21 @@
 </div>
 
 <!-- General JS Scripts -->
-<script src="\assets\js\app.min.js"></script>
+<script src="{{asset('assets\js\app.min.js')}}"></script>
 <!-- JS Libraies -->
-<script src="\assets\bundles\apexcharts\apexcharts.min.js"></script>
-<script src="\assets\bundles\amcharts4\core.js"></script>
-<script src="\assets\bundles\amcharts4\charts.js"></script>
-<script src="\assets\bundles\amcharts4\animated.js"></script>
-<script src="\assets\bundles\jquery.sparkline.min.js"></script>
-<script src="\assets\bundles\prism\prism.js"></script>
+<script src="{{asset('assets\bundles\apexcharts\apexcharts.min.js')}}"></script>
+<script src="{{asset('assets\bundles\amcharts4\core.js')}}"></script>
+<script src="{{asset('assets\bundles\amcharts4\charts.js')}}"></script>
+<script src="{{asset('assets\bundles\amcharts4\animated.js')}}"></script>
+<script src="{{asset('assets\bundles\jquery.sparkline.min.js')}}"></script>
+<script src="{{asset('assets\bundles\prism\prism.js')}}"></script>
 
 <!-- Page Specific JS File -->
-<script src="\assets\js\page\index.js"></script>
+<script src="{{asset('assets\js\page\index.js')}}"></script>
 <!-- Template JS File -->
-<script src="\assets\js\scripts.js"></script>
+<script src="{{asset('assets\js\scripts.js')}}"></script>
 <!-- Custom JS File -->
-<script src="\assets\js\custom.js"></script>
+<script src="{{asset('assets\js\custom.js')}}"></script>
 
 @if(session('errors'))
     <script type="text/javascript">

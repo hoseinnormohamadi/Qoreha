@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\User;
+use Illuminate\Support\Facades\Hash;
+use App\Site as Site;
 
 class WebController extends Controller
 {

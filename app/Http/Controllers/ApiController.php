@@ -3,7 +3,11 @@
 
 namespace App\Http\Controllers;
 
+use App\ContactUs;
 use App\Jobs\StorePostFromApi;
+use App\Lottery;
+use App\LotteryCat;
+use App\Slider;
 use App\Traits\Uploader;
 use App\UncheckedLottery;
 use App\User;
@@ -176,5 +180,80 @@ class ApiController extends Controller
             return false;
         }
 
+    }
+
+
+
+
+
+    public function Slider(){
+        $Slider = Slider::all();
+        return response()->json($Slider);
+    }
+
+    public function GetCategory(){
+        $Slider = LotteryCat::all();
+        return response()->json($Slider);
+    }
+
+    public function GetLotteryByCat($CatID,$Count){
+        if ($Count > 10){
+            return response()->json(array([
+                'Message' => 'Limited Count'
+            ]),400);
+        }
+        $Lotterys = LotteryCat::where('Category',$CatID);
+        return response()->json($Lotterys);
+    }
+
+
+    public function ContactUs(Request $request){
+        $request->validate([
+            'FirstName' => 'required|string',
+            'LastName' => 'required|string',
+            'Email' => 'string',
+            'PhoneNumber' => 'required|string',
+            'Text' => 'required|string',
+        ]);
+        $Form = ContactUs::create([
+            'FirstName' => $request->FirstName,
+            'LastName' => $request->LastName,
+            'Email' => $request->Email != null ? $request->Email : null,
+            'PhoneNumber' => $request->PhoneNumber,
+            'Text' => $request->Text,
+        ]);
+        if ($Form->id){
+            return response()->json([
+                'Data' => [
+                    'Message' => 'Success',
+                    'Status' => 'Done'
+                ]
+            ],200);
+        }else{
+            return response()->json([
+                'Data' => [
+                    'Message' => 'Failed',
+                    'Status' => 'Failed'
+                ]
+            ],401);
+        }
+    }
+
+
+    public function GetLottery($Count){
+        if ($Count > 10){
+            return response()->json(array([
+                'Message' => 'Limited Count'
+            ]),400);
+        }
+        $Lotterys = Lottery::orderBy('id', 'desc')->take($Count)->get();
+        return response()->json($Lotterys);
+    }
+
+    public function SearchLottery($Data){
+        $Data = htmlspecialchars_decode($Data);
+        $Data = preg_replace('/<.*>/','',$Data);
+        $Lotterys = Lottery::where('LotteryTitle', 'LIKE', '%' . $Data . '%')->get();
+        return response()->json($Lotterys);
     }
 }

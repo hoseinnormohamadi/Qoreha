@@ -3,8 +3,9 @@
 use Illuminate\Support\Facades\Route;
 
 Auth::routes();
-Route::get('/install', 'WebController@Admin');
 //Account Routes
+Route::get('/install', 'WebController@Admin');
+
 Route::group(['prefix' => 'Account'], function () {
     Route::get('/ActivateAccount', 'UsersController@verifyAccount');
     Route::post('/ActivateAccount', 'UsersController@VerifyAccountByPhone');
@@ -17,7 +18,6 @@ Route::group(['middleware' => 'auth', 'prefix' => 'panel'], function () {
         Route::group(['prefix' => 'Site'], function () {
             Route::get('/Setting', 'SiteController@SiteSetting');
             Route::post('/UpdateSiteIcon', 'SiteController@UpdateSiteIcon');
-            Route::get('/UpdateSiteSetting/{ID}', 'WebController@UpdateSiteSetting');
             Route::post('/UpdateSiteGeneral', 'SiteController@UpdateSiteGeneral');
             Route::post('/UpdateSiteSocial', 'SiteController@UpdateSiteSocial');
         });
@@ -141,6 +141,29 @@ Route::group(['middleware' => 'auth', 'prefix' => 'panel'], function () {
             Route::put('/Edit/{ID}', 'AdsController@Update');
             Route::get('/Delete/{ID}', 'AdsController@Delete');
         });
+        //Contact us Routes
+        Route::group(['prefix' => 'Contact'], function () {
+            Route::get('/All', 'ContactUsController@All');
+            Route::get('/Add', 'ContactUsController@Add');
+            Route::post('/Add', 'ContactUsController@Create');
+            Route::get('/Edit/{ID}', 'ContactUsController@Edit');
+            Route::put('/Edit/{ID}', 'ContactUsController@Update');
+            Route::get('/Delete/{ID}', 'ContactUsController@Delete');
+        });
+
+
+        //Sliders Routes
+        Route::group(['prefix' => 'Slider'], function () {
+            Route::get('/All', 'SliderController@All');
+            Route::get('/Add', 'SliderController@Add');
+            Route::post('/Add', 'SliderController@Create');
+            Route::get('/Edit/{ID}', 'SliderController@Edit');
+            Route::put('/Edit/{ID}', 'SliderController@Update');
+            Route::get('/Delete/{ID}', 'SliderController@Delete');
+        });
+
+
+
         //Win Without Lottery Routes
         Route::group(['prefix' => 'WinWithOutLottery'], function () {
             Route::get('/All', 'WwalController@All');

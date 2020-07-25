@@ -22,6 +22,8 @@ class CreateLotteriesTable extends Migration
             $table->string('LotteryImage');
             $table->unsignedBigInteger('LotteryOwner')->nullable();
             $table->foreign('LotteryOwner')->references('id')->on('users')->onDelete('cascade');
+             $table->unsignedBigInteger('Category')->nullable();
+            $table->foreign('Category')->references('id')->on('lottery_categories')->onDelete('cascade');
             $table->enum('LotteryType' , ['Digital' , 'Traditional'])->nullable();
             $table->unsignedBigInteger('LotteryWorker');
             $table->foreign('LotteryWorker')->references('id')->on('users')->onDelete('cascade');
