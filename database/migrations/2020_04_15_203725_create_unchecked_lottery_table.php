@@ -17,7 +17,7 @@ class CreateUncheckedLotteryTable extends Migration
             $table->id();
             $table->text('LotteryContent');
             $table->text('LotteryImage');
-            $table->text('LotteryImageLink')->unique();
+            $table->bigInteger('ImageID')->unique();
             $table->enum('LotteryStatus',['Draft','Published','Waiting','Archive'])->default('Waiting');
             $table->unsignedBigInteger('Worker');
             $table->foreign('Worker')->references('id')->on('users')->onDelete('cascade');

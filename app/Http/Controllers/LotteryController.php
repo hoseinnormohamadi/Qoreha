@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\DadeKavy;
 use App\Lottery;
 use App\LotteryCat;
 use App\Traits\CustomAuth;
@@ -250,26 +251,9 @@ class LotteryController extends Controller
             'Tedad' => 'required'
         ]);
         try {
-            $ch = curl_init(config('Qoreha.RobotUrl'));
-            $headers = array(
-                config('Qoreha.Token')
-            );
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-            curl_setopt($ch, CURLOPT_HEADER, 0);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            $body = "text=" . $request->Text . "&count=" . $request->Tedad;
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
-            $Result = curl_exec($ch);
-            $res = json_decode($Result);
-            $res = preg_replace('/\{/', '', $res);
-            $res = preg_replace('/\}/', '', $res);
-            $res = preg_replace('/"/', '', $res);
-            $res = explode(':', $res)[1];
-            die($res);
-            dd(explode(':', $res)[1]);
-            return RedirectController::Redirect('/panel/Lottery/DadeKavi', 'داده کاوی با موفقیت شروع شد.');
+            DadeKavy::dispatch($request->Text,$request->Tedad);
+            return RedirectController::Redirect('/panel/Lottery/DadeKavi', 'داده کاوی شروع شد.');
+
         } catch (\Exception $exception) {
             return RedirectController::Redirect('/panel/Lottery/DadeKavi', $exception->getMessage());
         }

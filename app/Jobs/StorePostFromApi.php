@@ -15,10 +15,9 @@ class StorePostFromApi implements ShouldQueue
 
     public $Data ;
 
-    public function __construct($Image,$ImageLink,$Content)
+    public function __construct($Image,$Content)
     {
         $this->Data['Image'] = $Image;
-        $this->Data['ImageLink'] = $ImageLink;
         $this->Data['Content'] = $Content;
     }
 
@@ -27,8 +26,7 @@ class StorePostFromApi implements ShouldQueue
         UncheckedLottery::create([
             'LotteryContent' => $this->Data['Content'],
             'LotteryImage' => $this->Data['Image'],
-            'LotteryImageLink' => $this->Data['ImageLink'],
-            'Worker' => \Auth::user()->id
+            'Worker' => 2
         ]);
     }
 }

@@ -24,8 +24,10 @@ Route::group(['prefix' => '/v1'], function() {
     Route::get('/GetLottery/{Count}','ApiController@GetLottery');
     //Search Lotterys
     Route::get('/SearchLottery/{Data}','ApiController@SearchLottery');
-    //Get Category
+    //Get Categoryafarin
     Route::get('/GetCategory','ApiController@GetCategory');
+    //Post ContactUs
+    Route::post('/ContactUs','ApiController@ContactUs');
     //store Post in queue
     Route::post('/StorePostWithQueue', 'ApiController@StorePostWithQueue');
     //store post directly

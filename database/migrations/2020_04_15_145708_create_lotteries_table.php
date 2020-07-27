@@ -13,6 +13,20 @@ class CreateLotteriesTable extends Migration
      */
     public function up()
     {
+
+
+        Schema::create('lottery_categories', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->timestamps();
+        });
+
+
+
+
+
+
+
         Schema::create('lotteries', function (Blueprint $table) {
             $table->id();
             $table->string('LotteryTitle');
@@ -31,6 +45,19 @@ class CreateLotteriesTable extends Migration
             $table->enum('LotteryMode',['Public','Private']);
             $table->timestamps();
         });
+
+
+
+
+
+        Schema::create('Lottery_Cat', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('Lottery_id');
+            $table->unsignedBigInteger('Cat_id');
+            $table->unique(['Cat_id','Lottery_id']);
+            $table->foreign('Lottery_id')->references('id')->on('lotteries')->onDelete('cascade');
+            $table->foreign('Cat_id')->references('id')->on('lottery_categories')->onDelete('cascade');
+        });
     }
 
     /**
@@ -41,5 +68,7 @@ class CreateLotteriesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('lotteries');
+        Schema::dropIfExists('lottery_categories');
+        Schema::dropIfExists('Lottery_Cat');
     }
 }

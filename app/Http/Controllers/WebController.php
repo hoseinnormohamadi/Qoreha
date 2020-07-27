@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use App\Site as Site;
+use InstagramScraper\Instagram;
+use Phpfastcache\CacheManager;
+use Phpfastcache\Helper\Psr16Adapter;
 
 class WebController extends Controller
 {
@@ -50,6 +53,24 @@ class WebController extends Controller
             'SiteName' => 'قرعه ها',
             'AboutUs' => 'وبسایت رسمی قرعه ها',
         ]);
+    }
+
+
+
+    public function test(){
+        //dd(CacheManager::getInstance('Files'));
+        $instagram = Instagram::withCredentials('moeinfordev', 'RAaA397akTrcpt8',new Psr16Adapter('Files'));
+        $instagram->login();
+        $instagram->saveSession();
+        $medias = $instagram->getMediasByTag('test', 1);
+        foreach ($medias as $media) {
+            $Link = $media->getImageHighResolutionUrl();
+            $ImageId = $media->getId();
+            $Text = $media->getCaption();
+
+            dd($ImageId);
+        }
+
     }
 
 

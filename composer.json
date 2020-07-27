@@ -18,6 +18,8 @@
         "kavenegar/laravel": "^1.2",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
+        "phpfastcache/phpfastcache": "^8.0",
+        "raiym/instagram-php-scraper": "^0.9.11",
         "symfony/psr-http-message-bridge": "^2.0",
         "tymon/jwt-auth": "^1.0"
     },
