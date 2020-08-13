@@ -183,6 +183,17 @@
 
 
 
+                        <li class="dropdown {{(request()->segment(2) == 'CheckList') ? 'active': ''}}">
+                            <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                                    class="fas fa-check-circle"></i><span>چک لیست نظارتی</span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="nav-link" href="/panel/CheckList/All">مدیریت چک لیست</a></li>
+                                <li><a class="nav-link" href="/panel/CheckList/Add">افزودن چک لیست</a></li>
+                            </ul>
+                        </li>
+
+
+
                         <li class="dropdown {{(request()->segment(2) == 'LinkTrade') ? 'active': ''}}">
                             <a href="#" class="menu-toggle nav-link has-dropdown"><i
                                     class="fas fa-link"></i><span>تبادل لینک</span></a>

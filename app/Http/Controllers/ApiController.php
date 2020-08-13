@@ -223,19 +223,10 @@ class ApiController extends Controller
             'Text' => $request->Text,
         ]);
         if ($Form->id){
-            return response()->json([
-                'Data' => [
-                    'Message' => 'Success',
-                    'Status' => 'Done'
-                ]
-            ],200);
+            return RedirectController::Redirect('/contact-us','پیام شما با موفقیت برای مدیریت ارسال شد.');
         }else{
-            return response()->json([
-                'Data' => [
-                    'Message' => 'Failed',
-                    'Status' => 'Failed'
-                ]
-            ],401);
+            return RedirectController::Redirect('/contact-us','مشکلی پیش آمده.لطفامجددا تلاش کنید.');
+
         }
     }
 

@@ -14,20 +14,20 @@ trait Uploader
             $name => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
         ]);
         if ($mode == 'Profile') {
-            $orginalPath = '/Uploads/' . $folder . '/' . \Auth::user()->Username . '/';
+            $orginalPath = '../public_html/Uploads/' . $folder . '/' . \Auth::user()->Username . '/';
             $path = public_path('Uploads/' . $folder . '/' . \Auth::user()->Username . '/');
             if (is_file(public_path(\Auth::user()->ProfileImage))){
                 unlink(public_path(\Auth::user()->ProfileImage));
             }
         } elseif ($mode == 'identityCart') {
-            $orginalPath = '/Uploads/' . $folder . '/' . \Auth::user()->Username . '/CartMeli/';
+            $orginalPath = '../public_html/Uploads/' . $folder . '/' . \Auth::user()->Username . '/CartMeli/';
             $path = public_path('Uploads/' . $folder . '/' . \Auth::user()->Username . '/CartMeli/');
         }elseif ($mode == 'Lottery') {
-            $orginalPath = '/Uploads/' . $folder . '/' . date('Y/m/d' . '/');
+            $orginalPath = '../public_html/Uploads/' . $folder . '/' . date('Y/m/d' . '/');
             $path = public_path($orginalPath);
         }
         elseif($mode == 'Post') {
-            $orginalPath = '/Uploads/' . $folder . '/' . date('Y/m/d' . '/');
+            $orginalPath = '../public_html/Uploads/' . $folder . '/' . date('Y/m/d' . '/');
             $path = public_path($orginalPath);
         }
         $imageName = bin2hex(random_bytes(32)) . '.jpg';
@@ -42,7 +42,7 @@ trait Uploader
         $request->validate([
             'SiteIcon' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
         ]);
-        $orginalPath = 'assets/img/';
+        $orginalPath = '../public_html/assets/img/';
         $path = public_path($orginalPath);
         $imageName = 'favicon.ico';
         \request('SiteIcon')->move($path, $imageName);

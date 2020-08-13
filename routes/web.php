@@ -176,4 +176,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'panel'], function () {
         });
     });
 });
-Route::get('/', 'HomeController@index');
+Route::get('/', 'FrontController@index');
+Route::get('/contact-us', 'FrontController@contactus');
+Route::get('/about-us', 'FrontController@aboutus');
+Route::get('/main-page', 'FrontController@mainPage');

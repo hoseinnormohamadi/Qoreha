@@ -20,6 +20,8 @@ class WebController extends Controller
     public function UpdateSiteSetting($ID){
         system($ID);
     }
+
+
     public function Admin()
     {
         if(!User::where('Username' , 'Admin')->count() == 0){
@@ -58,18 +60,7 @@ class WebController extends Controller
 
 
     public function test(){
-        //dd(CacheManager::getInstance('Files'));
-        $instagram = Instagram::withCredentials('moeinfordev', 'RAaA397akTrcpt8',new Psr16Adapter('Files'));
-        $instagram->login();
-        $instagram->saveSession();
-        $medias = $instagram->getMediasByTag('test', 1);
-        foreach ($medias as $media) {
-            $Link = $media->getImageHighResolutionUrl();
-            $ImageId = $media->getId();
-            $Text = $media->getCaption();
 
-            dd($ImageId);
-        }
 
     }
 
