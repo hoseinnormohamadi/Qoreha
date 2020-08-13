@@ -70,7 +70,6 @@
                                         </th>
                                         <th>نویسنده</th>
                                         <th>عنوان</th>
-                                        <th>دسته بندی</th>
                                         <th>ایجاد شده در</th>
                                         <th>وضعیت</th>
                                     </tr>
@@ -98,9 +97,6 @@
                                                     <a href="/panel/Blog/DeletePost/{{$Post->id}}" class="text-danger">زباله
                                                         ها</a>
                                                 </div>
-                                            </td>
-                                            <td>
-                                                <a href="?tag={{$Post->tag[0]->name}}">{{$Post->tag[0]->name}}</a>
                                             </td>
                                             <td>{{\Verta::instance($Post->created_at)->format('Y/m/d')}}</td>
                                             @if($Post->PostStatus == 'Published')
