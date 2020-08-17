@@ -177,6 +177,11 @@ Route::group(['middleware' => 'auth', 'prefix' => 'panel'], function () {
     });
 });
 Route::get('/', 'FrontController@index');
+Route::get('/Lotterys', 'FrontController@Lotterys');
+Route::get('/Lottery/{ID}', 'FrontController@ShowLottery');
+Route::get('/blog', 'FrontController@Blog');
+Route::get('/blog/{ID}', 'FrontController@ShowNews');
+Route::get('/Search', 'FrontController@Search');
 Route::get('/contact-us', 'FrontController@contactus');
+Route::post('/contact-us', 'FrontController@ContactUsPost');
 Route::get('/about-us', 'FrontController@aboutus');
-Route::get('/main-page', 'FrontController@mainPage');

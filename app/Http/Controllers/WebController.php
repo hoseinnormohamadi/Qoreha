@@ -54,6 +54,7 @@ class WebController extends Controller
         Site::create([
             'SiteName' => 'قرعه ها',
             'AboutUs' => 'وبسایت رسمی قرعه ها',
+            'Email' => 'info@ghoreha.ir',
         ]);
     }
 

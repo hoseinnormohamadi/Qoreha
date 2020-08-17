@@ -31,6 +31,7 @@ class SiteController extends Controller
             'SiteAbout' => 'required|string',
             'Address' => 'required|string',
             'PhoneNumber' => 'required|string',
+            'Email' => 'required|string'
         ]);
         try {
             $SiteConfig = Site::find(1);
@@ -38,6 +39,7 @@ class SiteController extends Controller
             $SiteConfig->AboutUs = $request->SiteAbout;
             $SiteConfig->PhoneNumber = $request->PhoneNumber;
             $SiteConfig->Address = $request->Address;
+            $SiteConfig->Email = $request->Email;
             $SiteConfig->save();
             return RedirectController::Redirect('/panel/Site/Setting','تنظیمات سایت با موفقیت بروزرسانی شد');
         }

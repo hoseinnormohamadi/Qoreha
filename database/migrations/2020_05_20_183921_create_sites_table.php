@@ -17,6 +17,7 @@ class CreateSitesTable extends Migration
             $table->id();
             $table->text('AboutUs');
             $table->string('SiteName');
+            $table->string('Email');
             $table->string('Enamad')->nullable();
             $table->string('Smandehi')->nullable();
             $table->string('PhoneNumber')->nullable();

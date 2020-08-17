@@ -16,4 +16,7 @@ class Lottery extends Model
     public function tag(){
         return $this->belongsToMany(LotteryCat::class,'Lottery_Cat','Lottery_id');
     }
+    public function Categori(){
+        return $this->belongsTo(LotteryCat::class,'Category','id');
+    }
 }
