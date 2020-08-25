@@ -84,6 +84,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'panel'], function () {
             Route::get('/UncheckedLottery', 'LotteryController@UnChecked');
             Route::get('/ImportLottery/{UnckeckedLotteryID}', 'LotteryController@GetLottery');
             Route::get('/Edit/{LotteryID}', 'LotteryController@Edit');
+            Route::put('/Edit/{LotteryID}', 'LotteryController@Update');
             Route::post('/ImportLottery/{UnckeckedLotteryID}', 'LotteryController@Import');
             Route::get('/DadeKavi', 'LotteryController@DadeKavi');
             Route::post('/DadeKaviPost', 'LotteryController@DadeKaviPost');
@@ -142,6 +143,18 @@ Route::group(['middleware' => 'auth', 'prefix' => 'panel'], function () {
             Route::put('/Edit/{ID}', 'AdsController@Update');
             Route::get('/Delete/{ID}', 'AdsController@Delete');
         });
+
+
+        Route::group(['prefix' => 'Menu'], function () {
+            Route::get('/All', 'MenuController@All');
+            Route::get('/Add', 'MenuController@Add');
+            Route::post('/Add', 'MenuController@Create');
+            Route::get('/Edit/{ID}', 'MenuController@Edit');
+            Route::put('/Edit/{ID}', 'MenuController@Update');
+            Route::get('/Delete/{ID}', 'MenuController@Delete');
+        });
+
+
         //Contact us Routes
         Route::group(['prefix' => 'Contact'], function () {
             Route::get('/All', 'ContactUsController@All');

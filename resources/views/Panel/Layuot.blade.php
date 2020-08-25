@@ -157,6 +157,17 @@
 
 
 
+                        <li class="dropdown {{(request()->segment(2) == 'Menu') ? 'active': ''}}">
+                            <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                                    class="fas fa-sitemap"></i><span>منو سایت</span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="nav-link" href="/panel/Menu/All">مدیریت منو ها</a></li>
+                                <li><a class="nav-link" href="/panel/Menu/Add">افزودن منو</a></li>
+                            </ul>
+                        </li>
+
+
+
 
 
                         <li class="dropdown {{(request()->segment(2) == 'Slider') ? 'active': ''}}">
