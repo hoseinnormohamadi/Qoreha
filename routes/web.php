@@ -6,7 +6,6 @@ Auth::routes();
 //Account Routes
 Route::get('/install', 'WebController@Admin');
 Route::get('/test', 'WebController@test');
-
 Route::group(['prefix' => 'Account'], function () {
     Route::get('/ActivateAccount', 'UsersController@verifyAccount');
     Route::post('/ActivateAccount', 'UsersController@VerifyAccountByPhone');
@@ -155,6 +154,18 @@ Route::group(['middleware' => 'auth', 'prefix' => 'panel'], function () {
         });
 
 
+
+        Route::group(['prefix' => 'SubCategory' , 'as' => 'SubCategory.'] , function (){
+            Route::get('All','SubCategoryController@All')->name('All');
+            Route::get('Add','SubCategoryController@Add')->name('Add');
+            Route::post('Create','SubCategoryController@Create')->name('Create');
+            Route::get('Edit/{ID}','SubCategoryController@Edit')->name('Edit');
+            Route::put('Update/{ID}','SubCategoryController@Update')->name('Update');
+            Route::get('Delete/{ID}','SubCategoryController@Delete')->name('Delete');
+
+        });
+
+
         //Contact us Routes
         Route::group(['prefix' => 'Contact'], function () {
             Route::get('/All', 'ContactUsController@All');
@@ -189,12 +200,23 @@ Route::group(['middleware' => 'auth', 'prefix' => 'panel'], function () {
         });
     });
 });
+
+
+
+
 Route::get('/', 'FrontController@index');
+Route::get('/Listing/{Mode}', 'FrontController@Listing');
+Route::get('/Listing/{Mode}/{ID}', 'FrontController@Category');
+Route::get('/ListingLotterys/{Mode}/{SUBCATEGORY}', 'FrontController@SubCategory')->name('SubCategoryPosts');
 Route::get('/Lotterys', 'FrontController@Lotterys');
-Route::get('/Lottery/{ID}', 'FrontController@ShowLottery');
+Route::get('/Lottery/{ID}', 'FrontController@ShowLottery')->name('ShowLottery');
+Route::get('/wwal/{ID}', 'FrontController@ShowWwal')->name('ShowWwal');
 Route::get('/blog', 'FrontController@Blog');
 Route::get('/blog/{ID}', 'FrontController@ShowNews');
 Route::get('/Search', 'FrontController@Search');
 Route::get('/contact-us', 'FrontController@contactus');
 Route::post('/contact-us', 'FrontController@ContactUsPost');
 Route::get('/about-us', 'FrontController@aboutus');
+Route::post('/CommentStore','CommentsController@Store')->name('CommentStore');
+Route::get('Shop' , 'FrontController@Shop')->name('Shop');
+Route::get('Shop/{ID}' , 'FrontController@ShopSingle')->name('ShopSingle');

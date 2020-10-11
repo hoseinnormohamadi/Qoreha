@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\LotteryCat;
+use App\SubCategory;
 use App\Traits\CustomAuth;
 use App\Traits\Uploader;
 use App\wwal;
@@ -61,7 +63,9 @@ class WwalController extends Controller
     }
 
     public function Add(){
-        return view('Panel.Wwal.Create');
+        $Tags = LotteryCat::all();
+        $SubCategory = SubCategory::all();
+        return view('Panel.Wwal.Create')->with(['Tags' => $Tags , 'SubCategory' => $SubCategory]);
     }
 
     public function Create(Request $request){
@@ -70,6 +74,8 @@ class WwalController extends Controller
             'Content' => 'required|string',
             'Image' => 'required|image',
             'ExpireDate' => 'required|date',
+            'Category' => 'required|integer',
+            'SubCategory' => 'required|integer'
         ]);
         try {
             $Wwal = wwal::create([
@@ -77,7 +83,9 @@ class WwalController extends Controller
                 'Content' => $request->Content,
                 'Image' => $this->UploadPic($request,'Image','WinWithoutALottery'),
                 'ExpireDate' => $request->ExpireDate,
-                'Worker' => \Auth::id()
+                'Worker' => \Auth::id(),
+                'Category' => $request->LotteryTags,
+                'SubCategory' => $request->LotterySubTags,
             ]);
             return RedirectController::Redirect('/panel/WinWithOutLottery/Edit/'.$Wwal->id,'قرعه کشی با موفقیت ایجاد شد.');
         }
@@ -88,17 +96,38 @@ class WwalController extends Controller
 
     public function Edit($id){
         $Wwal = wwal::find($id);
+        $Tags = LotteryCat::all();
+        $SubCategory = SubCategory::all();
         if ($Wwal == '' || empty($Wwal)){
             return  RedirectController::Redirect('/panel/WinWithOutLottery/All','قرعه کشی مورد نظر شما یافت نشد.مجدداً تلاش کنید');
         }
-        return view('Panel.Wwal.Edit')->with(['Wwal' => $Wwal]);
+        return view('Panel.Wwal.Edit')->with(['Wwal' => $Wwal ,'Tags' => $Tags , 'SubCategory' => $SubCategory]);
     }
 
     public function Update($id , Request $request){
+        $Wwal = wwal::find($id);
+        $request->validate([
+            'Name' => 'required|string',
+            'Content' => 'required|string',
+            'Image' => 'required|image',
+            'ExpireDate' => 'required|date',
+            'Category' => 'required|integer',
+            'SubCategory' => 'required|integer'
+        ]);
 
+        $Wwal->Name = $request->Name;
+        $Wwal->Content = $request->Content;
+        $Wwal->Image = $this->UploadPic($request,'Image','WinWithoutALottery');
+        $Wwal->ExpireDate = $request->ExpireDate;
+        $Wwal->Category = $request->Category;
+        $Wwal->SubCategory = $request->SubCategory;
+        $Wwal->save();
+        return redirect()->back();
     }
 
     public function Delete($id){
-
+        $Wwal = wwal::find($id);
+        $Wwal->delete();
+        return redirect()->back();
     }
 }

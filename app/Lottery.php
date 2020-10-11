@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Lottery extends Model
 {
     protected $fillable = [
-        'LotteryTitle','LotteryContent','LotteryFirstPrize','LotteryPrizes','LotteryImage','LotteryType','LotteryWorker','LotteryDate','LotteryMode',
+        'LotteryTitle','LotteryContent','LotteryFirstPrize','LotteryPrizes','LotteryImage','LotteryType','LotteryWorker','LotteryDate','LotteryMode','SubCategory' , 'Category','WebSite'
     ];
     public function User(){
         return $this->belongsTo(User::class,'LotteryWorker','id');

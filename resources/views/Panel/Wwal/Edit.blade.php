@@ -79,6 +79,42 @@
                                     </div>
                                 </div>
 
+
+
+
+
+                                <div class="form-group row mb-4">
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">دسته بندی
+                                        ها</label>
+                                    <div class="col-sm-12 col-md-7">
+                                        <select class="form-control selectric" name="Category">
+                                            <option>انتخاب دسته بندی</option>
+                                            @foreach($Tags as $tag)
+                                                <option name="Category" value="{{$tag->id}}" @if($tag->id == $Wwal->Category) selected @endif >{{$tag->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+                                <div class="form-group row mb-4">
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">زیر دسته بندی
+                                        ها</label>
+                                    <div class="col-sm-12 col-md-7">
+                                        <select class="form-control selectric" name="SubCategory">
+                                            <option>انتخاب زیر دسته بندی</option>
+                                            @foreach($SubCategory as $tag)
+                                                <option name="SubCategory" value="{{$tag->id}}" @if($tag->id == $Wwal->SubCategory) selected @endif >{{$tag->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+
                                 <div class="form-group row mb-4">
                                     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
                                     <div class="col-sm-12 col-md-7">

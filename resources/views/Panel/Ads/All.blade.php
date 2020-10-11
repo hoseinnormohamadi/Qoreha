@@ -93,7 +93,8 @@
                                                 {{$Ad->Name}}
                                             </td>
                                             <td>
-                                                {{Str::limit(strip_tags($Ad->Content),100) }}
+                                                <a href="{{$Ad->Link}}">{{$Ad->Link}}</a>
+
 
                                                 <div class="table-links">
                                                     <a href="/panel/Ads/Edit/{{$Ad->id}}">ویرایش</a>

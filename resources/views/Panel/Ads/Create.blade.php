@@ -1,15 +1,4 @@
 @extends('Panel.Layuot')
-@section('header')
-    <script src="/assets/Plugin/tinymce/tinymce.min.js"></script>
-    <script type="text/javascript">
-        tinymce.init({
-            selector: '#mytextarea',
-            language: 'fa',
-            branding: false,
-            height: 300
-        });
-    </script>
-@endsection
 @section('content')
     <section class="section">
         <ul class="breadcrumb breadcrumb-style ">
@@ -46,9 +35,13 @@
 
                                 <div class="form-group row mb-4">
                                     <label
-                                        class="col-form-label text-md-right col-12 col-md-3 col-lg-3 @error('Content') text-danger @enderror">محتوا</label>
-                                    <div class="col-sm-12 col-md-7">
-                                        <textarea id="mytextarea" name="Content">{{old('Content')}}</textarea>
+                                        class="col-form-label text-md-right col-12 col-md-3 col-lg-3  @error('Link') text-danger @enderror">
+                                        لینک تبلیغ
+                                    </label>
+                                    <div class="col-sm-12 col-md-7 ">
+                                        <input type="text"
+                                               class="form-control @error('Link') border border-danger @enderror"
+                                               name="Link" value="{{old('Link')}}">
                                     </div>
                                 </div>
 

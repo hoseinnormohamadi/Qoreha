@@ -39,6 +39,7 @@ class CreateLotteriesTable extends Migration
              $table->unsignedBigInteger('Category')->nullable();
             $table->foreign('Category')->references('id')->on('lottery_categories')->onDelete('cascade');
             $table->enum('LotteryType' , ['Digital' , 'Traditional'])->nullable();
+            $table->enum('Status' , ['InProgress' , 'Finished'])->nullable();
             $table->unsignedBigInteger('LotteryWorker');
             $table->foreign('LotteryWorker')->references('id')->on('users')->onDelete('cascade');
             $table->date('LotteryDate');

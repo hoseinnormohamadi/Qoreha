@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Jobs\DadeKavy;
 use App\Lottery;
 use App\LotteryCat;
+use App\SubCategory;
 use App\Traits\CustomAuth;
 use App\Traits\Uploader;
 use App\UncheckedLottery;
@@ -61,7 +62,8 @@ class LotteryController extends Controller
     public function Add()
     {
         $Tags = LotteryCat::all();
-        return view('Panel.Lottery.CreateLottery', ['Tags' => $Tags]);
+        $SubCategory = SubCategory::all();
+        return view('Panel.Lottery.CreateLottery', ['Tags' => $Tags , 'SubCategory' => $SubCategory]);
     }
 
     public function Create(Request $request)
@@ -73,6 +75,7 @@ class LotteryController extends Controller
             'LotteryPrizes' => 'string',
             'LotteryType' => 'required|string',
             'LotteryDate' => 'required|date',
+            'LotterySubTags' => 'required|integer',
         ]);
         try {
             $Lottery = Lottery::create([
@@ -86,8 +89,8 @@ class LotteryController extends Controller
                 'LotteryWorker' => \Auth::id(),
                 'LotteryMode' => 'public',
                 'Category' => $request->LotteryTags,
+                'SubCategory' => $request->LotterySubTags,
             ]);
-            $Lottery->tag()->attach($request->LotteryTags);
 
             return RedirectController::Redirect('/panel/Lottery/Edit/' . $Lottery->id, 'قرعه کشی با موفقیت ایجاد شد');
 
@@ -109,7 +112,8 @@ class LotteryController extends Controller
             }
         }
         $Tags = LotteryCat::all();
-        return view('Panel.Lottery.Edit')->with('Lottery', $Lottery)->with('Tags', $Tags);
+        $SubCategory = SubCategory::all();
+        return view('Panel.Lottery.Edit')->with('Lottery', $Lottery)->with(['Tags' => $Tags , 'SubCategory' => $SubCategory]);
     }
 
 
@@ -141,6 +145,7 @@ class LotteryController extends Controller
             $Lottery->LotteryType = $request->LotteryType;
             $Lottery->LotteryDate = $request->LotteryDate;
             $Lottery->Category = $request->LotteryTags;
+            $Lottery->SubCategory = $request->SubCategory;
             $Lottery->LotteryImage = $request->hasFile('LotteryImage') ? $this->UploadPic($request, 'LotteryImage', 'Lottery', 'Lottery') : $Lottery->LotteryImage ;
             $Lottery->save();
             return RedirectController::Redirect('/panel/Lottery/Edit/' . $Lottery->id, 'قرعه کشی با موفقیت ویرایش شد');
@@ -154,7 +159,9 @@ class LotteryController extends Controller
     {
         $Lottery = UncheckedLottery::find($id);
         $Tags = LotteryCat::all();
-        return view('Panel.Lottery.ImportLottery', ['Lottery' => $Lottery, 'Tags' => $Tags]);
+        $SubCategory = SubCategory::all();
+
+        return view('Panel.Lottery.ImportLottery', ['Lottery' => $Lottery, 'Tags' => $Tags , 'SubCategory' => $SubCategory]);
     }
 
 
@@ -180,8 +187,9 @@ class LotteryController extends Controller
                 'LotteryImage' => $request->hasFile('LotteryImage') ? $this->UploadPic($request, 'LotteryImage', 'Lottery', 'Lottery') : $UncheckedLottery->LotteryImage,
                 'LotteryWorker' => \Auth::id(),
                 'LotteryMode' => 'public',
+                'Category' => $request->LotteryTags,
+                'SubCategory' => $request->LotterySubTags,
             ]);
-            $Lottery->tag()->attach($request->LotteryTags);
             $UncheckedLottery->LotteryStatus = $request->LotteryStatus;
             return RedirectController::Redirect('/panel/Lottery/UncheckedLottery', 'قرعه کشی با موفقیت ایجاد شد');
         } else {
@@ -206,7 +214,8 @@ class LotteryController extends Controller
             $Waiting = UncheckedLottery::where('LotteryStatus', 'Waiting')->count();
             $Archive = UncheckedLottery::where('LotteryStatus', 'Archive')->count();
 
-        } elseif ($this->IsManager()) {
+        }
+        elseif ($this->IsManager()) {
             if (\request('GetLottery') == true) {
                 if (UncheckedLottery::where('Worker', \Auth::id())->count() == 0) {
                     UncheckedLottery::where('Worker', 2)->limit(10)->update(['Worker' => \Auth::id()]);
@@ -225,9 +234,8 @@ class LotteryController extends Controller
             $Archive = UncheckedLottery::where('Worker', \Auth::id())->where('LotteryStatus', 'Archive')->count();
 
 
-        } elseif ($this->IsLotteryAdmin()) {
-            $All = '';
         }
+
         return view('Panel.Lottery.UnCheckedLottery')
             ->with('Lotterys', $Lotterys)
             ->with('All', $All)

@@ -101,19 +101,12 @@
                             <a href="#" class="menu-toggle nav-link has-dropdown"><i class="fas fa-gifts"></i><span>قرعه کشی ها</span></a>
                             <ul class="dropdown-menu">
                                 <li><a class="nav-link" href="/panel/Lottery/AllLottery">مدیریت قرعه کشی ها</a></li>
-                                @if(Auth::user()->Rule == 'Admin'|| Auth::user()->Rule == 'Manager'|| Auth::user()->Rule == 'LotteryOwner')
+                                @if(Auth::user()->Rule == 'Admin'|| Auth::user()->Rule == 'Manager')
                                     <li><a class="nav-link" href="/panel/Lottery/Create">افزودن قرعه کشی</a></li>
-                                    @if(Auth::user()->Rule == 'Admin')
-                                        <li><a class="nav-link" href="/panel/Lottery/Category/All">مدیریت دسته بندی
-                                                ها</a></li>
-                                        <li><a class="nav-link" href="/panel/Lottery/Category/Add">افزودن دسته بندی</a>
-                                        </li>
-                                    @endif
-                                    @if(Auth::user()->Rule == 'Admin'|| Auth::user()->Rule == 'Manager')
+
                                         <li><a class="nav-link" href="/panel/Lottery/UncheckedLottery">قرعه کشی های
                                                 تایید
                                                 نشده</a></li>
-                                    @endif
                                         @if(Auth::user()->Rule == 'Admin')
                                             <li><a class="nav-link" href="/panel/Lottery/DadeKavi">داده کاوی</a></li>
                                         @endif
@@ -152,6 +145,19 @@
                                 <li><a class="nav-link" href="/panel/Shop/Category/Add">افزودن دسته بندی</a></li>
                                 <li><a class="nav-link" href="/panel/Shop/Category/All">مدیریت دسته بندی ها</a></li>
 
+                            </ul>
+                        </li>
+                        <li class="dropdown {{(request()->segment(3) == 'Category' || request()->segment(2) == 'SubCategory') ? 'active': ''}}">
+                            <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                                    class="fa fa-shopping-basket"></i><span>دسته بندی ها</span></a>
+                            <ul class="dropdown-menu">
+                                @if(Auth::user()->Rule == 'Admin')
+                                    <li><a class="nav-link" href="/panel/Lottery/Category/All">مدیریت دسته بندی ها</a></li>
+                                    <li><a class="nav-link" href="/panel/Lottery/Category/Add">افزودن دسته بندی</a>
+                                    <li><a class="nav-link" href="{{route('SubCategory.All')}}">مدیریت زیر دسته بندی</a>
+                                    <li><a class="nav-link" href="{{route('SubCategory.Add')}}">افزودن زیر دسته بندی</a>
+                                    </li>
+                                @endif
                             </ul>
                         </li>
 

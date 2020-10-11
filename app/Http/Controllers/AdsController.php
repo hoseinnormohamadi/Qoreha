@@ -50,7 +50,7 @@ class AdsController extends Controller
     public function Create(Request $request){
         $request->validate([
             'Name' => 'required|string|max:150',
-            'Content' => 'required|string',
+            'Link' => 'required|string',
             'AdsImage' => 'required|image',
             'Status' => 'required|string',
             'ExpireDate' => 'required|date'
@@ -58,7 +58,7 @@ class AdsController extends Controller
         try {
             $Ads = Ads::create([
                 'Name' => $request->Name,
-                'Content' => $request->Content,
+                'Link' => $request->Link,
                 'Image' => $this->UploadPic($request,'AdsImage','Ads'),
                 'Status' => $request->Status,
                 'ExpireDate' => $request->ExpireDate
@@ -85,13 +85,13 @@ class AdsController extends Controller
         }
         $request->validate([
             'Name' => 'required|string|max:150',
-            'Content' => 'required|string',
+            'Link' => 'required|string',
             'Status' => 'required|string',
             'ExpireDate' => 'required|date'
         ]);
         try {
             $Ads->Name = $request->Name;
-            $Ads->Content = $request->Content;
+            $Ads->Link = $request->Link;
             $Ads->Image = $request->hasFile('AdsImage') ? $this->UploadPic($request,'AdsImage','Ads') : $Ads->Image;
             $Ads->Status = $request->Status;
             $Ads->ExpireDate = $request->ExpireDate;

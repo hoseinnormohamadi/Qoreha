@@ -61,7 +61,7 @@ class WebController extends Controller
 
 
     public function test(){
-
+        return view('Front.listingV2');
 
     }
 

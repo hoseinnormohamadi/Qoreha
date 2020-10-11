@@ -5,17 +5,19 @@
         <div class="content">
             <section class="listing-hero-section hidden-section" data-scrollax-parent="true" id="sec1">
                 <div class="bg-parallax-wrap">
-                    <div class="bg par-elem " data-bg="{{asset('Frontassets/images/bg/6.jpg')}}" data-scrollax="properties: { translateY: '30%' }"></div>
+                    <div class="bg par-elem " data-bg="{{asset($Lottery->LotteryImage)}}"
+                         data-scrollax="properties: { translateY: '30%' }"></div>
                     <div class="overlay"></div>
-                </div>images/bg/6.jpg
+                </div>
                 <div class="container">
                     <div class="list-single-header-item  fl-wrap">
                         <div class="row">
                             <div class="col-md-9">
-                                 <h1>{{$Lottery->LotteryTitle}}</h1>
+                                <h1>{{$Lottery->LotteryTitle}}</h1>
                                 <div class="geodir-category-location fl-wrap">
-                                    <a href="#"><i class="fas fa-map-marker-alt"></i> ایران , تهران , زعفرانیه</a>
-                                    <a href="#"> <i class="fal fa-phone"></i>+38099231212</a> <a href="#"><i class="fal fa-envelope"></i> yourmail@domain.com</a>
+                                    <a href="#"><i class="fas fa-map-marker-alt"></i> {{$Lottery->User->Address}}</a>
+                                    <a href="#"> <i class="fal fa-phone"></i>{{$Lottery->User->PhoneNumber}}</a> <a
+                                        href="#"><i class="fal fa-envelope"></i> {{$Lottery->User->email}}</a>
                                 </div>
                             </div>
 
@@ -26,8 +28,12 @@
                             <div class="listing-item-category  red-bg"><i class="fal fa-cheeseburger"></i></div>
                             <span>{{$Lottery->Categori->name}}</span>
                         </a>
-                        <div class="list-single-author"> <a ><span class="author_avatar"> <img alt='' src='{{$Lottery->User->ProfileImage}}'>  </span>توسط {{$Lottery->User->FirstName .' ' . $Lottery->User->LastName}}</a></div>
-                        <div class="geodir_status_date gsd_open"><i class="fal fa-lock-open"></i>{{\Hekmatinasser\Verta\Verta::instance($Lottery->created_at)->format('d F Y')}}</div>
+                        <div class="list-single-author"><a><span class="author_avatar"> <img alt=''
+                                                                                             src='{{$Lottery->User->ProfileImage}}'>  </span>توسط {{$Lottery->User->FirstName .' ' . $Lottery->User->LastName}}
+                            </a></div>
+                        <div class="geodir_status_date gsd_open"><i
+                                class="fal fa-lock-open"></i>{{\Hekmatinasser\Verta\Verta::instance($Lottery->created_at)->format('d F Y')}}
+                        </div>
                         <!-- <div class="list-single-stats">
                             <ul class="no-list-style">
                                 <li><span class="viewed-counter"><i class="fas fa-eye"></i> بازدید -  156 </span></li>
@@ -76,139 +82,94 @@
 
                                 <div class="list-single-main-item fl-wrap block_box" id="sec5">
                                     <div class="list-single-main-item-title">
-                                        <h3>بررسی موارد - <span> 2 </span></h3>
+                                        <h3>بررسی موارد -
+                                            <span> {{\App\Comments::where('ParentID' , $Lottery->id)->where('Type' , 'Lottery')->count()}} </span>
+                                        </h3>
                                     </div>
                                     <!--reviews-score-wrap-->
 
                                     <!-- reviews-score-wrap end -->
                                     <div class="list-single-main-item_content fl-wrap">
                                         <div class="reviews-comments-wrap">
+                                        @foreach(\App\Comments::where('ParentID' , $Lottery->id)->where('Type' , 'Lottery')->get() as $Comment)
                                             <!-- reviews-comments-item -->
-                                            <div class="reviews-comments-item">
-                                                <div class="review-comments-avatar">
-                                                    <img src="../../../public/Frontassets/images/avatar/4.jpg" alt="">
-                                                </div>
-                                                <div class="reviews-comments-item-text fl-wrap">
-                                                    <div class="reviews-comments-header fl-wrap">
-                                                        <h4><a href="#">لیزا رز</a></h4>
-                                                        <div class="review-score-user">
-                                                            <span class="review-score-user_item">4.2</span>
-                                                            <div class="listing-rating card-popup-rainingvis" data-starrating2="4"></div>
+                                                <div class="reviews-comments-item">
+                                                    <div class="review-comments-avatar">
+                                                        <img src="{{$Comment->User->ProfileImage}}" alt="">
+                                                    </div>
+                                                    <div class="reviews-comments-item-text fl-wrap">
+                                                        <div class="reviews-comments-header fl-wrap">
+                                                            <h4>
+                                                                <a href="#">{{$Comment->User->FirstName .' ' . $Comment->User->LastName}}</a>
+                                                            </h4>
+
+                                                        </div>
+                                                        <div style="width: 250px">
+                                                            <p style=" word-break: break-all;">{{$Comment->Text}}</p>
+                                                        </div>
+                                                        <div class="reviews-comments-item-footer fl-wrap">
+                                                            <div class="reviews-comments-item-date"><span><i
+                                                                        class="far fa-calendar-check"></i>{{\Hekmatinasser\Verta\Verta::instance($Comment->created_at)->format('d F Y')}}</span>
+                                                            </div>
+
                                                         </div>
                                                     </div>
-                                                    <p>" لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد
-                                                        نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. "</p>
-                                                    <div class="reviews-comments-item-footer fl-wrap">
-                                                        <div class="reviews-comments-item-date"><span><i class="far fa-calendar-check"></i>12 اسفند 1399</span></div>
-                                                        <a href="#" class="rate-review"><i class="fal fa-thumbs-up"></i>  بررسی مفید  <span>2</span> </a>
-                                                    </div>
                                                 </div>
-                                            </div>
-                                            <!--reviews-comments-item end-->
-                                            <!-- reviews-comments-item -->
-                                            <div class="reviews-comments-item">
-                                                <div class="review-comments-avatar">
-                                                    <img src="../../../public/Frontassets/images/avatar/6.jpg" alt="">
-                                                </div>
-                                                <div class="reviews-comments-item-text fl-wrap">
-                                                    <div class="reviews-comments-header fl-wrap">
-                                                        <h4><a href="#">آدام کونسی</a></h4>
-                                                        <div class="review-score-user">
-                                                            <span class="review-score-user_item">5.0</span>
-                                                            <div class="listing-rating card-popup-rainingvis" data-starrating2="5"></div>
-                                                        </div>
-                                                    </div>
-                                                    <p>" لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است. "</p>
-                                                    <div class="review-images ">
-                                                        <a href="../../../public/Frontassets/images/all/18.jpg" class="image-popup"><img src="../../../public/Frontassets/images/all/18.jpg" alt=""></a>
-                                                        <a href="../../../public/Frontassets/images/all/24.jpg" class="image-popup"><img src="../../../public/Frontassets/images/all/24.jpg" alt=""></a>
-                                                    </div>
-                                                    <div class="reviews-comments-item-footer fl-wrap">
-                                                        <div class="reviews-comments-item-date"><span><i class="far fa-calendar-check"></i>12 اسفند 1399</span></div>
-                                                        <a href="#" class="rate-review"><i class="fal fa-thumbs-up"></i>  بررسی مفید  <span>4</span> </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--reviews-comments-item end-->
+                                                <!--reviews-comments-item end-->
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>
                                 <!-- list-single-main-item end -->
                                 <!-- list-single-main-item -->
                                 <div class="list-single-main-item fl-wrap block_box" id="sec6">
+
+                                </div>
+
+                            @if(Auth::check())
                                     <div class="list-single-main-item-title fl-wrap">
                                         <h3>ارسال بررسی</h3>
                                     </div>
                                     <!-- Add Review Box -->
                                     <div id="add-review" class="add-review-box">
                                         <!-- Review Comment -->
-                                        <form id="add-comment" class="add-comment  custom-form" name="rangeCalc">
+                                        <form class="add-comment  custom-form" action="{{route('CommentStore')}}"
+                                              method="post">
+                                            @csrf
                                             <fieldset>
-                                                <div class="review-score-form fl-wrap">
-                                                    <div class="review-range-container">
-                                                        <!-- review-range-item-->
-                                                        <div class="review-range-item">
-                                                            <div class="range-slider-title">پاکیزگی</div>
-                                                            <div class="range-slider-wrap ">
-                                                                <input type="text" class="rate-range" data-min="0" data-max="5" name="rgcl" data-step="1" value="4">
-                                                            </div>
-                                                        </div>
-                                                        <!-- review-range-item end -->
-                                                        <!-- review-range-item-->
-                                                        <div class="review-range-item">
-                                                            <div class="range-slider-title">آسایش</div>
-                                                            <div class="range-slider-wrap ">
-                                                                <input type="text" class="rate-range" data-min="0" data-max="5" name="rgcl" data-step="1" value="1">
-                                                            </div>
-                                                        </div>
-                                                        <!-- review-range-item end -->
-                                                        <!-- review-range-item-->
-                                                        <div class="review-range-item">
-                                                            <div class="range-slider-title">موقعیت</div>
-                                                            <div class="range-slider-wrap ">
-                                                                <input type="text" class="rate-range" data-min="0" data-max="5" name="rgcl" data-step="1" value="5">
-                                                            </div>
-                                                        </div>
-                                                        <!-- review-range-item end -->
-                                                        <!-- review-range-item-->
-                                                        <div class="review-range-item">
-                                                            <div class="range-slider-title">امکانات</div>
-                                                            <div class="range-slider-wrap">
-                                                                <input type="text" class="rate-range" data-min="0" data-max="5" name="rgcl" data-step="1" value="3">
-                                                            </div>
-                                                        </div>
-                                                        <!-- review-range-item end -->
-                                                    </div>
-                                                    <div class="review-total">
-                                                        <span><input type="text" name="rg_total"   data-form="AVG({rgcl})" value="0"></span>
-                                                        <strong>امتیاز شما</strong>
-                                                    </div>
-                                                </div>
+                                                <input type="hidden" name="Type" value="Lottery">
+                                                <input type="hidden" name="ParentID" value="{{$Lottery->id}}">
                                                 <div class="list-single-main-item_content fl-wrap">
                                                     <div class="row">
                                                         <div class="col-md-6">
                                                             <label><i class="fal fa-user"></i></label>
-                                                            <input type="text" placeholder="نام *" value="" />
+                                                            <input type="text" value="{{Auth::user()->Username}}"
+                                                                   disabled/>
                                                         </div>
                                                         <div class="col-md-6">
-                                                            <label><i class="fal fa-envelope"></i>  </label>
-                                                            <input type="text" placeholder="آدرس ایمیل*" value="" />
+                                                            <label><i class="fal fa-envelope"></i> </label>
+                                                            <input type="text" value="{{Auth::user()->email}}"
+                                                                   disabled/>
                                                         </div>
                                                     </div>
-                                                    <textarea cols="40" rows="3" placeholder="نظر شما:"></textarea>
+                                                    <textarea cols="40" rows="3" placeholder="نظر شما:"
+                                                              name="Text">{{old('Text')}}</textarea>
                                                     <div class="clearfix"></div>
-                                                    <div class="photoUpload">
-                                                        <span><i class="fal fa-image"></i> <strong>افزودن عکس</strong></span>
-                                                        <input type="file" class="upload" multiple>
-                                                    </div>
                                                     <div class="clearfix"></div>
-                                                    <button class="btn  color2-bg  float-btn">ارسال <i class="fal fa-paper-plane"></i></button>
+                                                    <button class="btn  color2-bg  float-btn" type="submit">ارسال <i
+                                                            class="fal fa-paper-plane"></i></button>
                                                 </div>
                                             </fieldset>
                                         </form>
                                     </div>
                                     <!-- Add Review Box / End -->
-                                </div>
+                                @else
+                                    <div class="list-single-main-item-title fl-wrap">
+                                        <h3>برای ارسال بررسی وارد حساب کاربری خود شوید</h3>
+                                    </div>
+                                    <!-- Add Review Box -->
+                                    <!-- Add Review Box / End -->
+                                @endif
                                 <!-- list-single-main-item end -->
                             </div>
                         </div>
@@ -282,10 +243,19 @@
                                     <div class="box-widget-content bwc-nopad">
                                         <div class="list-author-widget-contacts list-item-widget-contacts bwc-padside">
                                             <ul class="no-list-style">
-                                                <li><span><i class="fal fa-map-marker"></i> آدرس :</span> <a href="#">ایران , تهران , خیابان آزادی</a></li>
-                                                <li><span><i class="fal fa-phone"></i> تلفن :</span> <a href="#">021-1234567</a></li>
-                                                <li><span><i class="fal fa-envelope"></i> ایمیل :</span> <a href="#">AlisaNoory@domain.com</a></li>
-                                                <li><span><i class="fal fa-browser"></i> سایت :</span> <a href="www.rtl-theme.com/author/davod_taheri">Rtl-theme.com</a></li>
+                                                <li><span><i
+                                                            class="fal fa-map-marker"></i> آدرس :</span> {{$Lottery->User->Address}}
+                                                </li>
+                                                <li><span><i class="fal fa-phone"></i> تلفن :</span> <a
+                                                        href="tell:{{$Lottery->User->PhoneNumber}}">{{$Lottery->User->PhoneNumber}}</a>
+                                                </li>
+                                                <li><span><i class="fal fa-envelope"></i> ایمیل :</span> <a
+                                                        href="mailto:{{$Lottery->User->email}}">{{$Lottery->User->email}}</a>
+                                                </li>
+                                                @if($Lottery->WebSite != null)
+                                                    <li><span><i class="fal fa-browser"></i> سایت :</span> <a
+                                                            href="{{$Lottery->WebSite}}">{{$Lottery->WebSite}}</a></li>
+                                                @endif
                                             </ul>
                                         </div>
                                         <!-- <div class="list-widget-social bottom-bcw-box  fl-wrap">
@@ -365,15 +335,20 @@
                                         <div class="widget-posts  fl-wrap">
                                             <ul class="no-list-style">
                                                 @foreach(\App\Http\Controllers\FrontController::LikeThisLottery($Lottery->Category) as $lottery)
-                                                <li>
-                                                    <div class="widget-posts-img">
-                                                        <a href="/Lottery/{{$lottery->id}}"><img src="{{$lottery->LotteryImage}}" alt=""></a>
-                                                    </div>
-                                                    <div class="widget-posts-descr">
-                                                        <h4><a href="/Lottery/{{$lottery->id}}">{{$lottery->LotteryTitle}}</a></h4>
-                                                        <div class="geodir-category-content fl-wrap"><a>{!! Str::limit($lottery->LotteryContent, 30) !!}</a></div>
-                                                    </div>
-                                                </li>
+                                                    <li>
+                                                        <div class="widget-posts-img">
+                                                            <a href="/Lottery/{{$lottery->id}}"><img
+                                                                    src="{{$lottery->LotteryImage}}" alt=""></a>
+                                                        </div>
+                                                        <div class="widget-posts-descr">
+                                                            <h4>
+                                                                <a href="/Lottery/{{$lottery->id}}">{{$lottery->LotteryTitle}}</a>
+                                                            </h4>
+                                                            <div class="geodir-category-content fl-wrap">
+                                                                <a>{!! Str::limit($lottery->LotteryContent, 30) !!}</a>
+                                                            </div>
+                                                        </div>
+                                                    </li>
                                                 @endforeach
                                             </ul>
                                         </div>

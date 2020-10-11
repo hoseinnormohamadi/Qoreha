@@ -197,6 +197,8 @@
                                                target="_blank"><i class="fab fa-instagram"></i></a></li>
                                         <li><a href="https://t.me/{{\App\Site::find(1)->Telegram}}" target="_blank"><i
                                                     class="fab fa-telegram"></i></a></li>
+                                        <li><a href="https://t.me/{{\App\Site::find(1)->Telegram}}" target="_blank"><i
+                                                    class="fas fa-cube"></i></a></li>
                                     </ul>
                                 </div>
                             </div>

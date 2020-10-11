@@ -26,13 +26,13 @@ class LatteryCategoryController extends Controller
         }else{
             $Tags = LotteryCat::paginate(25);
         }
-        return view('Panel.Lottery.Tags')->with('Tags',$Tags);
+        return view('Panel.Categorys.Tags')->with('Tags',$Tags);
     }
 
 
     public function Add(){
 
-        return  view('Panel.Lottery.CreateTag');
+        return  view('Panel.Categorys.CreateTag');
     }
 
     public function Create(Request $request){
@@ -59,7 +59,7 @@ class LatteryCategoryController extends Controller
         if ($Tag == '' || empty($Tag) || $Tag->count() == 0){
             return RedirectController::Redirect('/panel/Lottery/Category/All', 'دسته بندی مورد نظر شما یافت نشد');
         }
-        return view('Panel.Lottery.EditTag')->with('Tag' , $Tag);
+        return view('Panel.Categorys.EditTag')->with('Tag' , $Tag);
     }
 
     public function Update($id , Request $request){

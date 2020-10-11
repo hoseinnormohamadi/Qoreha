@@ -36,7 +36,7 @@ class DadeKavy implements ShouldQueue
      */
     public function handle()
     {
-        $instagram = Instagram::withCredentials('moeinfordev', 'RAaA397akTrcpt8',new Psr16Adapter('Files'));
+        $instagram = Instagram::withCredentials(env('INSTAGRAMUSERNAME'), env('INSTAGRAMPASSWORD'),new Psr16Adapter('Files'));
         $instagram->login();
         $instagram->saveSession();
         $new_count=(int)$this->Tedad;
