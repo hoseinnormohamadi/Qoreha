@@ -76,21 +76,21 @@
         <!--  navigation -->
         <div class="nav-holder main-menu">
             <nav>
-                <ul class="no-list-style">
+                {{--<ul class="no-list-style">
                     @foreach(\App\Menu::all() as $menu)
                     <li>
                         <a href="{{$menu->Link}}" >{{$menu->Name}}</a>
                     </li>
                     @endforeach
-                  {{--  <li>
+                  --}}{{--  <li>
                         <a href="#">دسته ها <i class="fa fa-caret-down @if(request()->segment(1) == 'category') act-link @endif"></i></a>
                         <!--second level -->
                         <ul>
                             <li><a href="listing.html">ستون نقشه 1</a></li>
                         </ul>
                         <!--second level end-->
-                    </li>--}}
-                    {{--<li>
+                    </li>--}}{{--
+                    --}}{{--<li>
                         <a href="/blog" class="@if(request()->segment(1) == 'blog') act-link @endif">اخبار</a>
                     </li>
                     <li>
@@ -102,8 +102,8 @@
                     </li>
                     <li>
                         <a href="/contact-us" class="@if(request()->segment(1) == 'contact-us') act-link @endif">تماس با ما </a>
-                    </li>--}}
-                </ul>
+                    </li>--}}{{--
+                </ul>--}}
             </nav>
         </div>
         <!-- navigation  end -->

@@ -208,7 +208,7 @@
                                     <div class="d-gr-sec"></div>
                                     <div class="listing-counter color2-bg"><span>{{\App\HomeLotterry::all()->count()}}</span></div>
                                     <div class="listing-item-grid_title">
-                                        <h3><a href="listing.html">صندوق های خانگی</a></h3>
+                                        <h3><a href="#">صندوق های خانگی</a></h3>
                                     </div>
                                 </div>
                             </div>
@@ -217,7 +217,7 @@
                                     <div class="d-gr-sec"></div>
                                     <div class="listing-counter color2-bg"><span>{{\App\User::where('Rule' , 'Supervisor')->count()}}</span></div>
                                     <div class="listing-item-grid_title">
-                                        <h3><a href="listing.html">ناظران</a></h3>
+                                        <h3><a href="#">ناظران</a></h3>
                                     </div>
                                 </div>
                             </div>
